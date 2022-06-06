@@ -1,4 +1,6 @@
 # APU-Confession-Page
-A web application that allows:
-- Admin of APU Confession Page to manage the confession posted by users
-- APU students to confess anonymously
+This website is being built with the purpose of providing a more 
+intuitive interface for APU students or other to confess anonymously.
+It also acts as a helping tool that facilitates the process of managing 
+confesses posted.
+
