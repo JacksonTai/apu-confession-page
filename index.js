@@ -1,16 +1,32 @@
-const express = require("express");
-const app = express();
-const path = require("path");
+const express = require('express')
+const app = express()
+const path = require('path')
+const ejsMate = require('ejs-mate');
 
-app.use(express.static(path.join(__dirname, "public")));
+app.engine('ejs', ejsMate);
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "/views"));
+// Routes
+app.use('/confessions', require('./routes/confessions'))
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+// Routing
+app.get('/', (req, res) => {
+    res.render('home')
+})
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("LISTENING PORT 3000");
-});
+app.get('/about', (req, res) => {
+    res.render('about')
+})
+
+app.get('/guidelines', (req, res) => {
+    res.render('guidelines')
+})
+
+app.get('/apucp-admin', (req, res) => {
+    res.render('admin/login')
+})
+
+app.listen(3000, () => {
+    console.log('listening port 3000')
+})
