@@ -1,5 +1,5 @@
-# APU-Confession-Page
-This website is being built with the purpose of providing a more 
-intuitive interface for APU students or other to confess anonymously.
-It also acts as a helping tool that facilitates the process of managing 
-confesses posted.
+## APU Confession Page
+
+<img src="https://github.com/JacksonTai/APU-Confession-Page/blob/master/public/img/logo.jpg" align="right"
+     alt="APUCP Logo" >
+A website for APU students or other to confess anonymously.
