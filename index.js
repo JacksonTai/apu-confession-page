@@ -32,6 +32,6 @@ app.get('/apucp-admin', (req, res) => {
     res.render('admin/login')
 })
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('listening port 3000')
 })
