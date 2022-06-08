@@ -1,0 +1,22 @@
+footer {
+    padding: 3.5rem 0 2rem;
+    text-align: center;
+    background-color: #F8F9FA;
+}
+
+.footer-content {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.footer__title {
+    font-family: var(--ff-montserrat-text);
+    font-weight: 100;
+    text-decoration: 1px underline black;
+    margin: 0 auto;
+}
+
+.footer__list li {
+    font-size: 0.9rem;
+    margin: 1.5rem;
+}

@@ -1,0 +1,32 @@
+main {
+    min-height: 80vh;
+    margin: 3rem auto;
+}
+
+.guidelines__content-title {
+    width: fit-content;
+    margin-bottom: 0.8rem;
+    border-bottom: 0.15rem solid var(--clr-title);
+}
+
+.guidelines__content-title-2 {
+    margin: 2rem 0 0.35rem;
+}
+
+.guidelines__content--1 li::before {
+    content: '🎀 ';
+}
+
+.guidelines__content--2 li::before {
+    content: '❓ ';
+}
+
+.guidelines__content--3 li::before {
+    content: '❌ ';
+}
+
+@media (min-width: 1200px) {
+    main {
+        width: 70%;
+    }
+}
