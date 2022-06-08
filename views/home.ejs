@@ -1,2 +1,31 @@
-<% layout('boilerplate') %>
-<h1>Home</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head') %>
+    <link rel="stylesheet" href="css/home.css">
+    <title>APUCP</title>
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+    <main>
+        <img src="/img/home.jpg" class="home-img" alt="Home Image">
+        <div class="home__content">
+            <h1 class="home__content-title">Welcome to Asia Pacific Unviersity Confession Page (V4)</h1>
+            <p>This is yet another APU Confession page, managed single-handedly by a Degree student.
+                Unlike all the previous ones, we are much more conservative on what's allowed on the page to
+                prevent unnecessary takedowns. If any post makes you feel uncomfortable, please do not
+                hesitate to contact us via
+                <a href="https://www.facebook.com/APUCPv4" target="_blank">Facebook messenger</a>.
+            </p>
+            <a href="https://forms.gle/NNc9mVNdXRsRaqt8A" target="_blank" class="cta-btn btn btn-primary mt-1">
+                Confess
+            </a>
+        </div>
+    </main>
+    <%- include('partials/footer') %>
+    <script src="/js/partials/navbar.js"></script>
+</body>
+
+</html>

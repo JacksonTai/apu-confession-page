@@ -1,0 +1,41 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.disclaimer-img {
+    width: 80%;
+    max-width: 400px;
+}
+
+.disclaimer__content-title {
+    margin-bottom: 0.8rem;
+}
+
+.disclaimer__content {
+    text-align: center;
+}
+
+@media (min-width: 1200px) {
+    main {
+        flex-direction: row;
+        width: 70%;
+    }
+
+    .disclaimer-img,
+    .disclaimer__content {
+        margin-top: -5rem;
+    }
+
+    .disclaimer-img {
+        margin-right: 4rem;
+    }
+
+    .disclaimer__content {
+        width: 60%;
+        text-align: left;
+    }
+}

@@ -1,2 +1,50 @@
-<% layout('boilerplate') %>
-<h1>Guidelines</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head') %>
+    <link rel="stylesheet" href="css/guidelines.css">
+    <title>Guidelines - APUCP</title>
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+    <main>
+        <div class="guidelines__content">
+            <h1 class="guidelines__content-title">Guidelines</h1>
+            <div class="guidelines__content--1">
+                <h2 class="guidelines__content-title-2">a) The following content will be posted unmodified:</h2>
+                <ul>
+                    <li>Actual confession</li>
+                    <li>Wholesome and/or funny posts</li>
+                    <li>Constructive criticism, neutral complains</li>
+                    <li>Verified news</li>
+                    <li>Events, request for help, questions, advertisements, job postings</li>
+                </ul>
+            </div>
+            <div class="guidelines__content--2">
+                <h2 class="guidelines__content-title-2">b) The following content will be censored or labeled:</h2>
+                <ul>
+                    <li>Name calling in neutral/negative posts (e.g. Akari will be censored to A***i)</li>
+                    <li>Photo with human face, username, personal information, or any sensitive information</li>
+                    <li>Post with unverified/fake news, these will be labeled with a ❌ sign with a warning message (To
+                        be considered as genuine news, it has to be verifiable from mainstream news sources)</li>
+                </ul>
+            </div>
+            <div class="guidelines__content--3">
+                <h2 class="guidelines__content-title-2">c) The following content will not be posted:</h2>
+                <ul>
+                    <li>Hate speech (not to be confused with constructive criticism)</li>
+                    <li>18+ media of any purposes</li>
+                    <li>Copyrighted content (meme is fine as long as the consensus signals fair use)</li>
+                    <li>Duplicate posts (only the oldest one will be posted, cut off period is approximately one month)
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <%- include('partials/footer') %>
+    <script src="/js/partials/navbar.js"></script>
+</body>
+
+</html>
