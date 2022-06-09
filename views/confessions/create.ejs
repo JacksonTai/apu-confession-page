@@ -3,16 +3,56 @@
 
 <head>
     <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/confessions/create.css">
     <title>Confess - APUCP</title>
 </head>
 
 <body>
-    <%- include('../partials/navbar') %>
     <main>
-        <h1>Confess</h1>
+        <img src="/img/logo.jpg" class="apucp__logo" alt="APUCP Logo">
+        <p class="confess__content">Worried about your privacy when filling this form? Read our
+            <a href="https://bit.ly/3lkmGuJ" target="_blank">Form Transparency</a>. Akari is a human and is bound to
+            make mistake, feel free to contact us on
+            <a href="https://www.facebook.com/APUCPv4" target="_blank">Facebook</a> if you have any concern with the
+            content on the page.
+        </p>
+        <p class="confess__content">Please check <a href="/information" target="_blank">Common Confessions/Questions</a>
+            section before you write anything. Chances are the question have been asked for many times. The blacklisted
+            words will be highlighted in red.
+        </p>
+        <p class="confess__content">
+            There are currently <span class="queue-num">8</span> confession ahead of you awaiting to be reviewed.
+        </p>
+        <form action="/confessions" method="POST">
+            <textarea name="" class="confess__entry" placeholder="Write your confession here ..."></textarea>
+
+            <div class="form__item">
+                <h2>Attach Media (Optional)</h2>
+                <p class="confess__content">You may
+                    <a href="https://imgur.com/upload" target="_blank">upload photo</a> or
+                    <a href="https://streamable.com" target="_blank">video</a>, then copy
+                    and paste the media link into the textbox below.
+                </p>
+                <input type="text" name="" class="confess__img" placeholder="The media link goes here ...">
+            </div>
+
+            <div class="form__item">
+                <h2>Treaty of Zuckerberg</h2>
+                <p class="confess__content">Are you sure that your comment (and attached media) submitted follows the
+                    <a href="/guidelines" target="_blank">guidelines</a> and will not get the confession page being zucc
+                    again? Breach of treaty will lower the chance of it being posted.</p>
+                <div class="treaty">
+                    <input type="checkbox" name="" id="treaty" class="treaty__checkbox">
+                    <label for="treaty">Yes, my confession will not lead to the page getting zucc.</label>
+                </div>
+            </div>
+
+            <div class="form__item form__item--action">
+                <a href="/" class="btn">Back</a>
+                <button class="btn btn-primary">Submit</button>
+            </div>
+        </form>
     </main>
-    <%- include('../partials/footer') %>
-    <script src="/js/partials/navbar.js"></script>
 </body>
 
 </html>
