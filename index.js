@@ -29,7 +29,7 @@ app.get('/information', (req, res) => {
 })
 
 app.get('/apucp-admin', (req, res) => {
-    res.render('admin/login')
+    res.render('admin/signin')
 })
 
 app.listen(process.env.PORT || 3000, () => {

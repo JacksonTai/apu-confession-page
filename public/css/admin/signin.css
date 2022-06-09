@@ -1,0 +1,46 @@
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    max-width: 400px;
+    min-height: fit-content;
+    margin: 6rem auto;
+    padding: 3em;
+    border: 1px solid #DADCE0;
+    border-radius: 10px;
+}
+
+.apucp__logo {
+    display: block;
+    margin: 0 auto 2rem;
+}
+
+.signin__title {    
+    font-family: var(--ff-montserrat-text);
+    font-weight: 100;
+    text-align: center;
+}
+
+.form__item {
+    margin: 2rem auto;
+}
+
+.form__item-label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form__item-input {
+    width: 100%;
+    padding: 1.5em 1em;
+    height: 2rem;
+}
+
+.signin-btn {
+    display: block;
+    margin: 2rem auto;
+}
