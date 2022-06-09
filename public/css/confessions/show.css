@@ -1,0 +1,40 @@
+main {
+    max-width: 850px;
+    margin: 3rem auto;
+}
+
+.btn-back {
+    padding: 0;
+}
+
+h1 {
+    margin: 1.5rem auto 0;
+}
+
+.confession__id {
+    font-weight: 700;
+}
+
+.confession__time {
+    font-family: var(--ff-montserrat-text);
+    font-weight: 100;
+    margin-bottom: 1.5rem;
+}
+
+.confession__content {
+    margin: 0 auto 2.5rem;
+}
+
+.confession__action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-reject {
+    margin-right: 1rem;
+}
+
+.btn-reject:hover {
+    color: #fff;
+    background-color: var(--clr-delete-red);
+}

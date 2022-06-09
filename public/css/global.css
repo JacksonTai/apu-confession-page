@@ -29,6 +29,7 @@ html {
   --clr-secondary: #ec6f25;
   --clr-title: #253D4E;
   --clr-text: #5F6368;
+  --clr-delete-red: #fa2230;
   /* Theme font-family */
   --ff-montserrat-title: "montserrat-bold";
   --ff-montserrat-text: "montserrat-medium";
@@ -131,4 +132,9 @@ main {
   html {
     font-size: 15px;
   }
+}
+
+.fa-right-from-bracket {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
