@@ -1,17 +1,28 @@
+const Confession = require('../models/confessions');
+
 module.exports.create = async (req, res) => {
     res.render('confessions/create')
 }
 
 module.exports.store = async (req, res) => {
-    res.send('confession created')
+    const { confession } = req.body;
+    let { content, media } = confession
+    content = content.trim()
+    media = media.trim()
+
+    await new Confession(confession).save();
+    res.redirect('/')
 }
 
 module.exports.index = async (req, res) => {
-    res.render('confessions/index')
+    const confessions = await Confession.find().sort({ _id: 'desc' });
+    console.log(confessions);
+    res.render('confessions/index', { confessions });
 }
 
 module.exports.show = async (req, res) => {
-    res.render('confessions/show')
+    const confession = await Confession.findById(req.params.id);
+    res.render('confessions/show', { confession });
 }
 
 module.exports.update = async (req, res) => {

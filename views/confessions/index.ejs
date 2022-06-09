@@ -12,110 +12,22 @@
     <main>
         <h1>Confessions</h1>
         <section class="confession__list shadow">
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
+            <% for (let confession of confessions) { %>
+            <a class="confession__item" href="/confessions/<%= confession._id %>">
+                <p class="confession__id">#<%= confession._id %></p>
                 <div class="wrapper">
                     <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
+                        <%= confession.content %> 
                     </p>
-                    <span>Pending</span>
+                    <span><%= confession.status %></span>
                 </div>
             </a>
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
-                <div class="wrapper">
-                    <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
-                    </p>
-                    <span>Approved</span>
-                </div>
-            </a>
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
-                <div class="wrapper">
-                    <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
-                    </p>
-                    <span>Pending</span>
-                </div>
-            </a>
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
-                <div class="wrapper">
-                    <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
-                    </p>
-                    <span>Rejected</span>
-                </div>
-            </a>
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
-                <div class="wrapper">
-                    <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
-                    </p>
-                    <span>Pending</span>
-                </div>
-            </a>
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
-                <div class="wrapper">
-                    <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
-                    </p>
-                    <span>Pending</span>
-                </div>
-            </a>
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
-                <div class="wrapper">
-                    <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
-                    </p>
-                    <span>Pending</span>
-                </div>
-            </a>
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
-                <div class="wrapper">
-                    <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
-                    </p>
-                    <span>Pending</span>
-                </div>
-            </a>
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
-                <div class="wrapper">
-                    <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
-                    </p>
-                    <span>Rejected</span>
-                </div>
-            </a>
-            <a class="confession__item" href="/confessions/apucp02232">
-                <p class="confession__id">#APUCP02232</p>
-                <div class="wrapper">
-                    <p class="confession__content">
-                        last week my phone broke so i bought a new phone now i forgot my gmail account password i reset
-                        the password
-                    </p>
-                    <span>Pending</span>
-                </div>
-            </a>
+            <% } %>
         </section>
     </main>
     <%- include('../partials/footer') %>
     <script src="/js/partials/navbar.js"></script>
+    <script src="/js/confessions/index.js"></script>
 </body>
 
 </html>

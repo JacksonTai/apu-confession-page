@@ -13,22 +13,17 @@
         <a href="/confessions" class="btn btn-back">
             <i class="fa-solid fa-right-from-bracket"></i> Back
         </a>
-        <div class="confession__item" href="/confessions/apucp02232">
-            <h1>APUCP#02232</h1>
-            <h2 class="confession__time">Confession on: 6/8/2022 00:52:02</h2>
-            <p class="confession__content">
-                last week my phone broke so i bought a new phone now i forgot my gmail account password i reset the
-                password. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo recusandae nihil vel, nemo quos
-                error. Saepe sint asperiores vero, corporis nemo et aspernatur est debitis dolores. Excepturi rem, quae
-                doloribus facere delectus eaque laboriosam placeat odio eligendi sapiente modi totam ad hic pariatur
-                dolor quaerat tempore eveniet earum fugiat quidem. Reprehenderit quibusdam ducimus dignissimos
-                distinctio repellendus non corporis sunt, incidunt inventore illo, reiciendis tempore dolores, fuga
-                deserunt asperiores. Laborum, ipsam. Adipisci, enim? Quos sit quam nobis dolorum, impedit sunt eaque!
-            </p>
+        <div class="confession__item" href="/confessions/<%= confession._id %>">
+            <h1>#<%= confession._id %></h1>
+            <h2 class="confession__time">Confession on: <%= confession.timestamp %></h2>
+            <p class="confession__content"><%= confession.content %></p>
             <div class="confession__action">
-
+                <% if (confession.status === 'Pending') { %>
                 <button class="btn btn-reject">Reject</button>
                 <button class="btn btn-primary">Approve</button>
+                <% } else { %>
+                <p><%= confession.status %></p>
+                <% } %>
             </div>
         </div>
     </main>

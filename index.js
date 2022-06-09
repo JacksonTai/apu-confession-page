@@ -1,8 +1,22 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const mongoose = require("mongoose");
+
+const dbUrl = 'mongodb://localhost:27017/apucp';
+
+// Database Connection
+mongoose.connect(dbUrl, {
+    useUnifiedTopology: true,
+}).then(() => {
+    console.log("CONNECTION OPEN!!!");
+}).catch((e) => {
+    console.log("OH NO ERROR!!!!");
+    console.log(e);
+});
 
 // Middleware
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")));
 
 app.set('views', path.join(__dirname, 'views'))
