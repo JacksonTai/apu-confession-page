@@ -33,8 +33,6 @@ html {
   --ff-montserrat-title: "montserrat-bold";
   --ff-montserrat-text: "montserrat-medium";
   --ff-montserrat-light: "montserrat-light";
-  /* Custom size */
-  --layout-header-height: 60px;
 }
 
 /* --------- [Fonts] ---------- */
@@ -63,11 +61,16 @@ h5 {
   font-family: var(--ff-montserrat-title);
 }
 
+textarea,
+button,
+input,
+label,
 .txt,
 span,
 li,
 a,
 p {
+  font-size: 1rem;
   color: var(--clr-text);
   font-family: var(--ff-montserrat-text);
 }
@@ -85,6 +88,11 @@ li {
   list-style: none;
 }
 
+::selection {
+  background-color: #1A73E8;
+  color: #ffffff;
+}
+
 /* ---------- [Button] ----------- */
 .btn {
   border: none;
@@ -100,10 +108,18 @@ li {
   font-weight: 700;
 }
 
+/* ---------- [Form] ----------- */
+textarea,
+input {
+  border: 1px solid #DADCE0;
+  border-radius: 10px;
+}
+
 /* ---------- [Layout] ----------- */
 main {
   min-height: calc(100vh - 116px);
   width: 85%;
+  margin: 0 auto;
 }
 
 @media (min-width: 1000px) {
