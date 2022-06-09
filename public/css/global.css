@@ -122,6 +122,11 @@ main {
   margin: 0 auto;
 }
 
+.shadow {
+  box-shadow: 0px 0px 2px 2px #dadada;
+  border-radius: 10px;
+}
+
 @media (min-width: 1000px) {
   html {
     font-size: 15px;

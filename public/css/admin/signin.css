@@ -19,7 +19,7 @@ main {
     margin: 0 auto 2rem;
 }
 
-.signin__title {    
+.signin__title {
     font-family: var(--ff-montserrat-text);
     font-weight: 100;
     text-align: center;
@@ -43,4 +43,9 @@ main {
 .signin-btn {
     display: block;
     margin: 2rem auto;
+}
+
+.back {
+    display: block;
+    text-align: center;
 }
