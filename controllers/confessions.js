@@ -34,5 +34,8 @@ module.exports.edit = async (req, res) => {
 }
 
 module.exports.destroy = async (req, res) => {
-    res.send('confession deleted')
+    await Confession.findByIdAndDelete(req.params.id);
+    // console.log(confessions);
+    res.redirect('/confessions')
+    // res.send('confession deleted')
 }

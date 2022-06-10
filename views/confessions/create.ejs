@@ -24,7 +24,7 @@
             There are currently <span class="queue-num">8</span> confession ahead of you awaiting to be reviewed.
         </p>
         <form action="/confessions" method="POST">
-            <textarea name="confession[content]" class="confess__entry" placeholder="Write your confession here ..."></textarea>
+            <textarea name="confession[content]" class="confess__entry" placeholder="Write your confession here ..." required></textarea>
 
             <div class="form__item">
                 <h2>Attach Media (Optional)</h2>
@@ -33,7 +33,7 @@
                     <a href="https://streamable.com" target="_blank">video</a>, then copy
                     and paste the media link into the textbox below.
                 </p>
-                <input type="text" name="confession[media]" class="confess__img" placeholder="The media link goes here ...">
+                <input type="text" name="confession[media]" class="confess__img" placeholder="The media link goes here ..." required>
             </div>
 
             <div class="form__item">
@@ -42,7 +42,7 @@
                     <a href="/guidelines" target="_blank">guidelines</a> and will not get the confession page being zucc
                     again? Breach of treaty will lower the chance of it being posted.</p>
                 <div class="treaty">
-                    <input type="checkbox" name="confession[treaty]" id="treaty" class="treaty__checkbox">
+                    <input type="checkbox" name="confession[treaty]" id="treaty" class="treaty__checkbox" required>
                     <label for="treaty">Yes, my confession will not lead to the page getting zucc.</label>
                 </div>
             </div>

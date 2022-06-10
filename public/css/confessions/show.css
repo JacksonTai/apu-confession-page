@@ -30,11 +30,11 @@ h1 {
     justify-content: flex-end;
 }
 
-.btn-reject {
+.btn-remove {
     margin-right: 1rem;
 }
 
-.btn-reject:hover {
+.btn-remove:hover {
     color: #fff;
     background-color: var(--clr-delete-red);
 }

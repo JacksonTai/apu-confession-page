@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 
 const dbUrl = 'mongodb://localhost:27017/apucp';
 
@@ -9,7 +10,7 @@ const dbUrl = 'mongodb://localhost:27017/apucp';
 mongoose.connect(dbUrl, {
     useUnifiedTopology: true,
 }).then(() => {
-    console.log("CONNECTION OPEN!!!");
+    console.log(`Database connected: ${dbUrl} `);
 }).catch((e) => {
     console.log("OH NO ERROR!!!!");
     console.log(e);
@@ -18,6 +19,7 @@ mongoose.connect(dbUrl, {
 // Middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride("_method"));
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -46,6 +48,7 @@ app.get('/apucp-admin', (req, res) => {
     res.render('admin/signin')
 })
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log('listening port 3000')
+const port = process.env.PORT || 3000
+app.listen(port, () => {
+    console.log(`Listening port: ${port}`)
 })
