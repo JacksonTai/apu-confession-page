@@ -1,22 +1,17 @@
 const Confession = require('../models/confessions');
 
 module.exports.create = async (req, res) => {
-    res.render('confessions/create')
+    const queueNum = await Confession.find().count()
+    res.render('confessions/create', { queueNum })
 }
 
 module.exports.store = async (req, res) => {
-    const { confession } = req.body;
-    let { content, media } = confession
-    content = content.trim()
-    media = media.trim()
-
-    await new Confession(confession).save();
-    res.redirect('/')
+    await new Confession(req.body.confession).save();
+    res.redirect('/confessions/create?status=submitted',);
 }
 
 module.exports.index = async (req, res) => {
     const confessions = await Confession.find().sort({ _id: 'desc' });
-    console.log(confessions);
     res.render('confessions/index', { confessions });
 }
 
@@ -26,16 +21,23 @@ module.exports.show = async (req, res) => {
 }
 
 module.exports.update = async (req, res) => {
-    res.send('confession edited')
+    await Confession.findByIdAndUpdate(req.params.id, req.body.confession)
+    res.redirect(`/confessions/${req.params.id}/edit?status=edited&confession=${req.params.id}`);
 }
 
 module.exports.edit = async (req, res) => {
-    res.render('confessions/edit')
+    let input, errMsg;
+    if (req.session.editFormData) {
+        let { editFormData: data } = req.session
+        input = data.input;
+        errMsg = data.errMsg;
+        req.session.editFormData = null
+    }
+    const confession = await Confession.findById(req.params.id)
+    res.render('confessions/edit', { confession, input, errMsg })
 }
 
 module.exports.destroy = async (req, res) => {
     await Confession.findByIdAndDelete(req.params.id);
-    // console.log(confessions);
     res.redirect('/confessions')
-    // res.send('confession deleted')
 }

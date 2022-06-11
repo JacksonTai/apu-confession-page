@@ -8,17 +8,20 @@ main {
 }
 
 h1 {
+    word-wrap: break-word;
     margin: 1.5rem auto 0;
-}
-
-.confession__id {
-    font-weight: 700;
 }
 
 .confession__time {
     font-family: var(--ff-montserrat-text);
     font-weight: 100;
-    margin-bottom: 1.5rem;
+}
+
+.confession__edit {
+    display: block;
+    color: var(--clr-primary);
+    margin: 0.3rem 0 1.5rem;
+    text-decoration: none;
 }
 
 .confession__content {
@@ -28,13 +31,22 @@ h1 {
 .confession__action {
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 1rem;
 }
 
 .btn-remove {
-    margin-right: 1rem;
+    margin-bottom: 0.7rem;
 }
 
-.btn-remove:hover {
-    color: #fff;
-    background-color: var(--clr-delete-red);
+@media (min-width: 353px) {
+    .btn-remove {
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 369.5px) {
+    .btn-remove {
+        margin-right: 1rem;
+    }
 }

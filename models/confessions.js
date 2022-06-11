@@ -15,14 +15,13 @@ const ConfessionSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Approved', 'Rejected'],
+        enum: ['Pending', 'Blacklisted'],
         default: 'Pending',
         required: true
-    }
+    },
 })
 
 ConfessionSchema.virtual('timestamp').get(function () {
-
     let timestamp = this.time.toISOString().replace('T', '-').split('-')
     let time = this.time.toString().split(' ')[4]
 

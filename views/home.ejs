@@ -10,6 +10,9 @@
 <body>
     <%- include('partials/navbar') %>
     <main>
+        <% if (typeof data != 'undefined') { %>
+        <%= data.errMsg %>
+        <% } %>
         <img src="/img/home.jpg" class="home-img" alt="Home Image">
         <div class="home__content">
             <h1 class="home__content-title">Welcome to Asia Pacific Unviersity Confession Page (V4)</h1>

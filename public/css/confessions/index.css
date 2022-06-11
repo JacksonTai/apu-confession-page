@@ -1,5 +1,6 @@
 main {
     margin: 2.5rem auto 6rem;
+    width: 92%;
     max-width: 850px;
 }
 
@@ -29,6 +30,7 @@ h1 {
 }
 
 .confession__id {
+    word-wrap: break-word;
     font-weight: 700;
 }
 
