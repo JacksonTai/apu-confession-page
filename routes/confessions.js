@@ -1,21 +1,29 @@
 const express = require('express')
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
 
 const confessions = require('../controllers/confessions')
+const { validateConfession } = require('../middleware')
+const catchAsync = require('../utils/catchAsync')
 
-router.get('/create', confessions.create)
+router.get('/create', catchAsync(confessions.create))
 
 router
     .route('/')
-    .post(confessions.store)
-    .get(confessions.index)
+    .post(
+        validateConfession,
+        catchAsync(confessions.store)
+    )
+    .get(catchAsync(confessions.index))
 
 router
     .route('/:id')
-    .get(confessions.show)
-    .put(confessions.update)
-    .delete(confessions.destroy)
+    .get(catchAsync(confessions.show))
+    .put(
+        validateConfession,
+        catchAsync(confessions.update)
+    )
+    .delete(catchAsync(confessions.destroy))
 
-router.get('/:id/edit', confessions.edit)
+router.get('/:id/edit', catchAsync(confessions.edit))
 
 module.exports = router

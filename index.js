@@ -3,6 +3,9 @@ const app = express()
 const path = require('path')
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
+const session = require('express-session')
+
+const ExpressError = require('./utils/expressError')
 
 const dbUrl = 'mongodb://localhost:27017/apucp';
 
@@ -20,6 +23,13 @@ mongoose.connect(dbUrl, {
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
+app.use(
+    session({
+        secret: "thisisnotagoodsecret",
+        resave: false,
+        saveUninitialized: false,
+    })
+);
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -47,6 +57,19 @@ app.get('/information', (req, res) => {
 app.get('/apucp-admin', (req, res) => {
     res.render('admin/signin')
 })
+
+// Error Handler
+app.all("*", (req, res, next) => {
+    next(new ExpressError("Page not found", 404));
+});
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) {
+        err.message = "OH NO! SOMETHING WENT WRONG.";
+    }
+    res.status(statusCode).render("error", { err });
+});
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {

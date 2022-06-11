@@ -21,30 +21,53 @@
             words will be highlighted in red.
         </p>
         <p class="confess__content">
-            There are currently <span class="queue-num">8</span> confession ahead of you awaiting to be reviewed.
+            There are currently <span class="queue-num"><%= queueNum %></span> confession ahead of you awaiting to be
+            reviewed.
         </p>
-        <form action="/confessions" method="POST">
-            <textarea name="confession[content]" class="confess__entry" placeholder="Write your confession here ..." required></textarea>
+
+        <form action="/confessions" class="confession__form" method="POST">
+            <div class="confession__form-label">
+                <h2>Confession Content</h2>
+                <span class="confession__label-alert">*</span>
+            </div>
+            <p class="err-msg" data-err-msg="content">
+                <% if (typeof errMsg != 'undefined' && typeof errMsg.content != 'undefined') { %>
+                <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.content %>
+                <% } %>
+            </p>
+            <textarea name="confession[content]" class="confess__input confess__input--content"
+                placeholder="Write your confession here ..."><%= typeof input != 'undefined' && typeof input.content != 'undefined' ? input.content : '' %></textarea>
 
             <div class="form__item">
                 <h2>Attach Media (Optional)</h2>
                 <p class="confess__content">You may
                     <a href="https://imgur.com/upload" target="_blank">upload photo</a> or
-                    <a href="https://streamable.com" target="_blank">video</a>, then copy
-                    and paste the media link into the textbox below.
+                    <a href="https://streamable.com" target="_blank">video</a>, then copy and paste the media link into
+                    the textbox below.
                 </p>
-                <input type="text" name="confession[media]" class="confess__img" placeholder="The media link goes here ..." required>
+                <input type="text" name="confession[media]" class="confess__input confess__input--media"
+                    placeholder="The media link goes here ..."
+                    value="<%= typeof input != 'undefined' && typeof input.media != 'undefined' ? input.media : '' %>">
             </div>
 
             <div class="form__item">
-                <h2>Treaty of Zuckerberg</h2>
+                <div class="confession__form-label">
+                    <h2>Treaty of Zuckerberg</h2>
+                    <span class="confession__label-alert">*</span>
+                </div>
                 <p class="confess__content">Are you sure that your comment (and attached media) submitted follows the
                     <a href="/guidelines" target="_blank">guidelines</a> and will not get the confession page being zucc
                     again? Breach of treaty will lower the chance of it being posted.</p>
                 <div class="treaty">
-                    <input type="checkbox" name="confession[treaty]" id="treaty" class="treaty__checkbox" required>
+                    <input type="checkbox" name="confession[treaty]" id="treaty" class="treaty__checkbox"
+                        <%= typeof input != 'undefined' && typeof input.treaty != 'undefined' ? 'checked' : '' %>>
                     <label for="treaty">Yes, my confession will not lead to the page getting zucc.</label>
                 </div>
+                <p class="err-msg" data-err-msg="treaty">
+                    <% if (typeof errMsg != 'undefined' && typeof errMsg.treaty != 'undefined') { %>
+                    <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.treaty %>
+                    <% } %>
+                </p>
             </div>
 
             <div class="form__item form__item--action">
@@ -55,6 +78,8 @@
             </div>
         </form>
     </main>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/confessions/create.js"></script>
 </body>
 
 </html>

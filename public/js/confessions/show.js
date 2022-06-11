@@ -9,9 +9,10 @@ removeBtn.addEventListener('click', async function () {
     const { confessionId } = this.closest('.confession__action').dataset;
 
     Swal.fire({
-        title: `Are you sure you want to remove this confession: ${confessionId}?`,
+        icon: 'warning',
+        title: `Are you sure you want to remove confession: ${confessionId}?`,
         html: '<p>This will permenantly remove the confession information ' +
-            'including id, content, media, time posted and status from the database.</p>',
+            'including the id, content, media links, time posted and status from the database.</p>',
         showDenyButton: true,
         showCancelButton: true,
         showConfirmButton: false,
@@ -20,7 +21,8 @@ removeBtn.addEventListener('click', async function () {
         if (result.isDenied) {
             Swal.fire({
                 title: `Confession: ${confessionId} Removed`,
-                icon: 'success'
+                icon: 'success',
+                iconColor: '#1A73E8',
             }).then(() => {
                 removeForm.submit()
             })
