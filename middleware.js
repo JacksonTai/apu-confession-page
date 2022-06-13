@@ -1,36 +1,36 @@
-const express = require("express");
-const app = express();
-const session = require('express-session')
-const Confession = require('./models/confessions')
-const { confessionSchema } = require("./joiSchema");
-
-const validateReqBody = (reqBody) => {
-    const { error } = confessionSchema.validate(reqBody);
-    if (error) {
-        const { confession: input } = reqBody
-
-        // Derive info in this way: {field: error message}
-        const err = error.details.map(el => ({ [el.context.key]: el.message }))
-        const errMsg = Object.assign(...err)
-
-        return { errMsg, input }
-    }
-}
+const Confession = require('./models/confessions');
+const validateReqBody = require('./utils/validateReqBody');
+const { confessionSchema, signinSchema } = require("./joiSchema");
 
 module.exports.validateConfession = async (req, res, next) => {
-    const error = validateReqBody(req.body)
+    const error = validateReqBody(confessionSchema, req.body);
     if (error) {
-        const { errMsg, input } = error
-        const data = { input, errMsg }
-
-        if (req.method == "PUT") {
-            req.session.editFormData = data
-            return res.redirect(`/confessions/${req.params.id}/edit`);
-        }
-        if (req.method == "POST") {
-            data.queueNum = await Confession.find().count();
-            return res.render('confessions/create', data);
+        error.input = req.body.confession;
+        switch (req.method) {
+            case "PUT":
+                req.session.editFormData = error;
+                return res.redirect(`/confessions/${req.params.id}/edit`);
+            case "POST":
+                error.queueNum = await Confession.find().count();
+                return res.render('confessions/create', error);
         }
     }
     next();
 };
+
+module.exports.validateSignin = async (req, res, next) => {
+    const error = validateReqBody(signinSchema, req.body);
+    if (error) {
+        error.input = req.body.signin;
+        return res.render('admin/signin', error);
+    }
+    next();
+}
+
+module.exports.authenticate = async (req, res, next) => {
+    // Turn caching off.
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    req.session.admin_id ? next() : res.render('admin/signin');
+}

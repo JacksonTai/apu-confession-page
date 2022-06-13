@@ -4,7 +4,7 @@
 <head>
     <%- include('../partials/head') %>
     <link rel="stylesheet" href="/css/confessions/create.css">
-    <title>Confess - APUCP</title>
+    <title>Confess - <%= siteTitle %></title>
 </head>
 
 <body>
@@ -26,28 +26,29 @@
         </p>
 
         <form action="/confessions" class="confession__form" method="POST">
-            <div class="confession__form-label">
-                <h2>Confession Content</h2>
-                <span class="confession__label-alert">*</span>
+            <div class="form__item">
+                <div class="confession__form-label">
+                    <h2>Confession Content</h2>
+                    <span class="confession__label-alert">*</span>
+                </div>
+                <p class="err-msg" data-err-msg="content">
+                    <% if (locals.errMsg && errMsg.content) { %>
+                    <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.content %>
+                    <% } %>
+                </p>
+                <textarea name="confession[content]" class="confess__input confess__input--content"
+                    placeholder="Write your confession here ..."><%= locals.input ? input.content : '' %></textarea>
             </div>
-            <p class="err-msg" data-err-msg="content">
-                <% if (typeof errMsg != 'undefined' && typeof errMsg.content != 'undefined') { %>
-                <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.content %>
-                <% } %>
-            </p>
-            <textarea name="confession[content]" class="confess__input confess__input--content"
-                placeholder="Write your confession here ..."><%= typeof input != 'undefined' && typeof input.content != 'undefined' ? input.content : '' %></textarea>
 
             <div class="form__item">
                 <h2>Attach Media (Optional)</h2>
                 <p class="confess__content">You may
                     <a href="https://imgur.com/upload" target="_blank">upload photo</a> or
-                    <a href="https://streamable.com" target="_blank">video</a>, then copy and paste the media link into
-                    the textbox below.
+                    <a href="https://streamable.com" target="_blank">video</a>,
+                    then copy and paste the media link into the textbox below.
                 </p>
                 <input type="text" name="confession[media]" class="confess__input confess__input--media"
-                    placeholder="The media link goes here ..."
-                    value="<%= typeof input != 'undefined' && typeof input.media != 'undefined' ? input.media : '' %>">
+                    placeholder="The media link goes here ..." value="<%= locals.input ? input.media : '' %>">
             </div>
 
             <div class="form__item">
@@ -60,11 +61,11 @@
                     again? Breach of treaty will lower the chance of it being posted.</p>
                 <div class="treaty">
                     <input type="checkbox" name="confession[treaty]" id="treaty" class="treaty__checkbox"
-                        <%= typeof input != 'undefined' && typeof input.treaty != 'undefined' ? 'checked' : '' %>>
+                        <%= locals.input && locals.input.treaty ? 'checked' : '' %>>
                     <label for="treaty">Yes, my confession will not lead to the page getting zucc.</label>
                 </div>
                 <p class="err-msg" data-err-msg="treaty">
-                    <% if (typeof errMsg != 'undefined' && typeof errMsg.treaty != 'undefined') { %>
+                    <% if (locals.errMsg && errMsg.treaty) { %>
                     <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.treaty %>
                     <% } %>
                 </p>

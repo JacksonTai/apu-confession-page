@@ -4,7 +4,7 @@
 <head>
     <%- include('../partials/head') %>
     <link rel="stylesheet" href="/css/confessions/edit.css">
-    <title>Edit #<%= confession._id %> - APUCP</title>
+    <title>Edit #<%= confession._id %> - <%= siteTitle %></title>
 </head>
 
 <body>
@@ -25,21 +25,20 @@
                         <span class="confession__label-alert">*</span>
                     </div>
                     <p class="err-msg" data-err-msg="content">
-                        <% if (typeof errMsg != 'undefined' && typeof errMsg.content != 'undefined') { %>
+                        <% if (locals.errMsg) { %>
                         <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.content %>
                         <% } %>
                     </p>
                     <textarea name="confession[content]" class="confess__input confess__input--content"
-                        placeholder="Write your confession here ..."><%= typeof input != 'undefined' && typeof input.content != 'undefined' ? input.content : confession.content %></textarea>
+                        placeholder="Write your confession here ..."><%= locals.input ? input.content : confession.content %></textarea>
                 </div>
 
                 <div class="form__item">
                     <h2>Attach Media (Optional)</h2>
                     <p class="confess__content">You may
                         <a href="https://imgur.com/upload" target="_blank">upload photo</a> or
-                        <a href="https://streamable.com" target="_blank">video</a>, then copy and paste the media link
-                        into
-                        the textbox below.
+                        <a href="https://streamable.com" target="_blank">video</a>, 
+                        then copy and paste the media link into the textbox below.
                     </p>
                     <input type="text" name="confession[media]" class="confess__input confess__input--media"
                         placeholder="The media link goes here ..." value="<%= confession.media %>">
