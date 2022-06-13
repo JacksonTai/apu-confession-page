@@ -3,14 +3,28 @@
 
 <head>
     <%- include('partials/head') %>
-    <link rel="stylesheet" href="css/error.css">
+    <style>
+        main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .not-found-img {
+            width: 85%;
+            max-width: 500px;
+        }
+    </style>
     <title>Error - <%= siteTitle %></title>
 </head>
 
 <body>
     <%- include('partials/navbar') %>
     <main>
-        <h1><%= err.message %> </h1>
+        <img src="/img/error.png" class="not-found-img" alt="Page not found image">
+        <h1><%= err.message %></h1>
+        <h2><%= err.statusCode %></h2>
     </main>
     <%- include('partials/footer') %>
     <script src="/js/partials/navbar.js"></script>

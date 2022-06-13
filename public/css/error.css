@@ -1,8 +1,8 @@
 main {
-    background-image: url("/img/error.jpg");
+    /* background-image: url("/img/error.jpg");
     background-size: contain;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     display: flex;
     justify-content: center;
 }
