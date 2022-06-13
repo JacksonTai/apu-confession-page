@@ -4,6 +4,7 @@ const path = require('path')
 const mongoose = require("mongoose");
 const session = require('express-session')
 const methodOverride = require("method-override");
+const session = require('express-session')
 
 const ExpressError = require('./utils/expressError')
 
