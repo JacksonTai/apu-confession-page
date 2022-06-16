@@ -20,9 +20,7 @@ mongoose.connect(dbUrl, {
 });
 
 // Content Security Policy (CSP) Configuration
-const connectSrcUrls = ["https://www.googletagmanager.com",];
 const scriptSrcUrls = [
-    "https://www.googletagmanager.com",
     "https://cdn.jsdelivr.net",
 ];
 const styleSrcUrls = [
@@ -41,7 +39,7 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: [],
-            connectSrc: ["'self'"],
+            connectSrc: [],
             scriptSrc: ["'self'", "'unsafe-inline'", ...scriptSrcUrls],
             styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
             workerSrc: ["'self'", "blob:"],
