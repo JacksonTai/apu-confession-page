@@ -71,6 +71,11 @@ h2 {
     margin-bottom: 0.7rem;
 }
 
+.btn-cancel:hover {
+    background-color: var(--clr-primary);
+    color: #fff;
+}
+
 @media (min-width: 353px) {
     .btn-cancel {
         margin-bottom: 0;

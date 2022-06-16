@@ -1,3 +1,8 @@
+const backBtn = document.querySelector('.btn-back');
+backBtn.addEventListener('click', function () {
+    window.location = sessionStorage.getItem('prevPageState') || '/confessions'
+})
+
 const removeForm = document.querySelector('.confession__remove-form');
 const removeBtn = document.querySelector('.btn-remove');
 
@@ -6,11 +11,9 @@ removeForm.addEventListener('submit', (e) => {
 })
 
 removeBtn.addEventListener('click', async function () {
-    const { confessionId } = this.closest('.confession__action').dataset;
-
     Swal.fire({
         icon: 'warning',
-        title: `Are you sure you want to remove confession: ${confessionId}?`,
+        title: `Are you sure you want to remove confession: ${apucpId}?`,
         html: '<p>This will permenantly remove the confession information ' +
             'including the id, content, media links, time posted and status from the database.</p>',
         showDenyButton: true,
@@ -20,7 +23,7 @@ removeBtn.addEventListener('click', async function () {
     }).then((result) => {
         if (result.isDenied) {
             Swal.fire({
-                title: `Confession: ${confessionId} Removed`,
+                title: `Confession: ${apucpId} Removed`,
                 icon: 'success',
                 iconColor: '#1A73E8',
             }).then(() => {

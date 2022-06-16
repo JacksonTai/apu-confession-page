@@ -21,7 +21,9 @@ if (urlParams.get('status') == "submitted") {
     Swal.fire({
         icon: "success",
         title: "Your confession has been submitted. 😃",
-        html: "<p>Confessions will be uploaded as soon as akari noticed. Depending on your luck, it would be within minutes, hours or days.</p>",
+        html: `<h3>Your confession ID: ${decodeURIComponent(urlParams.get('id'))}</h3>` +
+            `<p>Confessions will be uploaded as soon as akari noticed. Depending on your luck, 
+                  it would be within minutes, hours or days.</p>`,
         allowOutsideClick: false,
         showDenyButton: false,
         showCancelButton: false,
@@ -30,7 +32,7 @@ if (urlParams.get('status') == "submitted") {
         iconColor: '#1A73E8',
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location = "http://localhost:3000/"
+            window.location = "/"
         }
     });
 }

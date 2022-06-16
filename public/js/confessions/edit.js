@@ -10,7 +10,7 @@ const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get('status') == "edited") {
     Swal.fire({
         icon: "success",
-        title: `Confession: ${urlParams.get('confession')} successfully edited.`,
+        title: `Confession: ${apucpId} successfully edited.`,
         allowOutsideClick: false,
         showDenyButton: false,
         showCancelButton: false,
@@ -19,7 +19,7 @@ if (urlParams.get('status') == "edited") {
         iconColor: '#1A73E8',
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location = `http://localhost:3000/confessions/${urlParams.get('confession')}`
+            window.location = `${window.location.href.split('confessions')[0]}confessions/${id}`
         }
     });
 }

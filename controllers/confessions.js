@@ -6,18 +6,51 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.store = async (req, res) => {
-    await new Confession(req.body.confession).save();
-    res.redirect('/confessions/create?status=submitted',);
+    const { _id } = await Confession.findOne().sort({ _id: 'desc' }).select('_id')
+    let { confession } = req.body
+    confession._id = _id + 1
+    confession = await new Confession(confession).save();
+    res.redirect(`/confessions/create?status=submitted&id=${encodeURIComponent(confession.apucpId)}`,);
 }
 
 module.exports.index = async (req, res) => {
-    const confessions = await Confession.find().sort({ _id: 'desc' });
-    res.render('confessions/index', { confessions });
+    let result = req.query.result ? req.query.result : 10;
+
+    const confessions = await Confession.find().sort({ _id: 'asc' }).limit(result);
+    const count = await Confession.countDocuments({});
+
+    const viewMore = result >= count ? false : true;
+    res.render('confessions/index', { confessions, viewMore, count });
 }
 
 module.exports.show = async (req, res) => {
     const confession = await Confession.findById(req.params.id);
     res.render('confessions/show', { confession });
+}
+
+module.exports.api = async (req, res) => {
+    let result = req.query.result ? req.query.result : 10;
+    const limit = 10;
+    const skip = result - limit;
+
+    const confessions = await Confession.find()
+        .sort({ _id: 'asc' })
+        .skip(skip)
+        .limit(limit);
+
+    let confessionsTxt = '';
+    for (let confession of confessions) {
+        confessionsTxt += `<a class="confession__item" href="/confessions/${confession._id}" id="${confession._id}">
+                                <p class="confession__id">${confession.apucpId}</p>
+                                <div class="wrapper">
+                                    <p class="confession__content">
+                                        ${confession.content}
+                                    </p>
+                                    <span>${confession.status}</span>
+                                </div>
+                            </a>`
+    }
+    res.send(confessionsTxt)
 }
 
 module.exports.update = async (req, res) => {

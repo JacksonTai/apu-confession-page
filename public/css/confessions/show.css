@@ -19,7 +19,7 @@ h1 {
 
 .confession__edit {
     display: inline-block;
-    color: var(--clr-primary);
+    color: var(--clr-link);
     margin: 0.3rem 0 1.5rem;
     text-decoration: none;
 }

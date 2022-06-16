@@ -23,15 +23,19 @@
   },
   "homepage": "https://github.com/JacksonTai/APU-Confession#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "ejs": "^3.1.8",
     "ejs-mate": "^4.0.0",
     "express": "^4.18.1",
+    "express-mongo-sanitize": "^2.2.0",
     "express-session": "^1.17.3",
+    "helmet": "^5.1.0",
     "joi": "^17.6.0",
     "method-override": "^3.0.0",
     "mongoose": "^6.3.5",
     "nodemon": "^2.0.16",
-    "sweetalert2": "^11.4.17"
+    "sweetalert2": "^11.4.17",
+    "xss": "^1.0.13"
   }
 }

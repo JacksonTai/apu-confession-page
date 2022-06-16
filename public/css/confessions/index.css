@@ -1,5 +1,5 @@
 main {
-    margin: 2.5rem auto 6rem;
+    margin: 0 auto 6rem;
     width: 92%;
     max-width: 850px;
 }
@@ -7,6 +7,10 @@ main {
 h1 {
     text-align: center;
     margin: 1.5rem auto;
+}
+
+.confessison-count {
+    margin-bottom: 0.8rem;
 }
 
 .confession__item {
@@ -41,4 +45,41 @@ h1 {
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+}
+
+.btn-view-more {
+    display: block;
+    margin: 3rem auto;
+    border: 1px solid var(--clr-primary);
+    color: var(--clr-primary);
+    background-color: #fff;
+    width: fit-content;
+}
+
+.btn-view-more:hover {
+    background-color: var(--clr-primary);
+    color: #fff;
+}
+
+.empty-list-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.empty-list-title {
+    margin-bottom: 0.3rem;
+    font-family: var(--ff-montserrat-text);
+    font-weight: 100;
+}
+
+.empty-list-msg {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.empty-list-img {
+    width: 80%;
+    max-width: 500px;
 }

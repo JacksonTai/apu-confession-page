@@ -11,10 +11,10 @@
     <%- include('../partials/navbar') %>
     <main>
         <a href="/confessions/<%= confession._id %>" class="btn btn-back">
-            <i class="fa-solid fa-right-from-bracket"></i> Back to Confession: #<%= confession._id %>
+            <i class="fa-solid fa-right-from-bracket"></i> Back to Confession: <%= confession.apucpId %>
         </a>
         <div class="confession__item" href="/confessions/<%= confession._id %>">
-            <h1>Edit Confession: #<%= confession._id %></h1>
+            <h1>Edit Confession: <%= confession.apucpId %></h1>
             <h2 class="confession__time">Confession on: <%= confession.timestamp %></h2>
 
             <form action="/confessions/<%= confession._id %>/?_method=PUT" class="confession__update-form"
@@ -56,6 +56,10 @@
     <%- include('../partials/footer') %>
     <script src="/js/partials/navbar.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const apucpId = "<%= confession.apucpId %>"
+        const id = "<%= confession._id %>"
+    </script>
     <script src="/js/confessions/edit.js"></script>
 </body>
 

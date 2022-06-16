@@ -1,3 +1,4 @@
+const xss = require('xss')
 const Confession = require('./models/confessions');
 const validateReqBody = require('./utils/validateReqBody');
 const { confessionSchema, signinSchema } = require("./joiSchema");
@@ -33,4 +34,13 @@ module.exports.authenticate = async (req, res, next) => {
     res.header('Expires', '-1');
     res.header('Pragma', 'no-cache');
     req.session.admin_id ? next() : res.render('admin/signin');
+}
+
+module.exports.sanitizeHtml = async (req, res, next) => {
+    let resource = Object.values(req.body)[0];
+
+    Object.entries(resource).forEach((item) => {
+        resource[item[0]] = xss(item[1])
+    })
+    next()
 }
