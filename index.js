@@ -16,11 +16,13 @@ const ExpressError = require('./utils/expressError');
 // Database Connection
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/apucp';
 mongoose.connect(dbUrl, {
+    useNewUrlParser: true,
     useUnifiedTopology: true,
-}).then(() => {
-    console.log(`Database connected: ${dbUrl} `);
-}).catch((e) => {
-    console.log(e);
+});
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+    console.log("Database Connected successfully");
 });
 
 // Content Security Policy (CSP) Configuration
