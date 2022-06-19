@@ -8,6 +8,7 @@ contentInput.addEventListener('input', function () {
 
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get('status') == "edited") {
+    window.history.replaceState(null, '', `/confessions`);
     Swal.fire({
         icon: "success",
         title: `Confession: ${apucpId} successfully edited.`,
@@ -23,4 +24,3 @@ if (urlParams.get('status') == "edited") {
         }
     });
 }
-

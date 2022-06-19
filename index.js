@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -10,7 +14,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const ExpressError = require('./utils/expressError');
 
 // Database Connection
-const dbUrl = 'mongodb://localhost:27017/apucp';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/apucp';
 mongoose.connect(dbUrl, {
     useUnifiedTopology: true,
 }).then(() => {
@@ -20,8 +24,13 @@ mongoose.connect(dbUrl, {
 });
 
 // Content Security Policy (CSP) Configuration
+const connectSrcUrls = [
+    `https://graph.facebook.com/v14.0/${process.env.FB_PAGE_ID}/feed`,
+    `https://graph.facebook.com/v14.0/${process.env.FB_PAGE_ID}/photos`
+]
 const scriptSrcUrls = [
     "https://cdn.jsdelivr.net",
+    "https://connect.facebook.net/en_US/sdk.js"
 ];
 const styleSrcUrls = [
     "https://cdnjs.cloudflare.com",
@@ -39,8 +48,8 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: [],
-            connectSrc: [],
-            scriptSrc: ["'self'", "'unsafe-inline'", ...scriptSrcUrls],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrcElem: ["'self'", "'unsafe-inline'", ...scriptSrcUrls],
             styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
             workerSrc: ["'self'", "blob:"],
             objectSrc: [],
@@ -48,13 +57,14 @@ app.use(helmet({
                 "'self'",
                 "blob:",
                 "data:",
+                "https://www.facebook.com"
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },
     },
 }));
 app.use(session({
-    secret: "~MWVsAg5mHfKAYw]",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -91,11 +101,27 @@ app.use((err, req, res, next) => {
     if (!err.message) {
         err.message = "SOMETHING WENT WRONG.";
     }
+    console.log(err)
     res.status(statusCode).render("error", { err });
 });
 
 // Setup server
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Listening on port: ${port}`);
-});
+/* HTTP */
+// app.listen(port, () => {
+//     console.log(`Listening on port: ${port}`);
+// });
+
+/* HTTPS */
+const fs = require("fs");
+const https = require("https");
+https
+    .createServer(
+        {
+            key: fs.readFileSync("server.key"),
+            cert: fs.readFileSync("server.cert"),
+        }, app)
+    .listen(port, function () {
+        console.log(`Listening on port: ${port}`);
+    });
+

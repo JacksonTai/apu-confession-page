@@ -4,12 +4,16 @@ const { Schema } = mongoose;
 const ConfessionSchema = new Schema({
     _id: {
         type: Number,
+        required: true
     },
     time: {
         type: Date,
         default: Date.now
     },
-    media: {
+    photo: {
+        type: String
+    },
+    video: {
         type: String
     },
     content: {

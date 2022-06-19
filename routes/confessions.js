@@ -7,6 +7,7 @@ const catchAsync = require('../utils/catchAsync');
 
 router.get('/create', catchAsync(confessions.create));
 router.get('/api', catchAsync(confessions.api));
+router.get('/approve', catchAsync(confessions.approve))
 
 router
     .route('/')

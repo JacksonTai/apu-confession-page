@@ -54,9 +54,18 @@ h2 {
     resize: none;
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .confess__input--media {
     padding: 1.5em;
     height: 2rem;
+}
+
+.confess__input--media:first-of-type {
+    margin-bottom: 0.8rem;
 }
 
 .confession__action {
@@ -85,5 +94,20 @@ h2 {
 @media (min-width: 369.5px) {
     .btn-cancel {
         margin-right: 1rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .confess__input--media:first-of-type {
+        margin-bottom: 0rem;
+    }
+
+    .confess__input--media {
+        width: 49%;
     }
 }

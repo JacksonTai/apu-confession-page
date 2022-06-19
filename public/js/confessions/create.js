@@ -18,6 +18,7 @@ treatyCheckbox.addEventListener('change', function () {
 
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get('status') == "submitted") {
+    window.history.replaceState(null, '', `/`);
     Swal.fire({
         icon: "success",
         title: "Your confession has been submitted. 😃",

@@ -46,9 +46,18 @@ h2 {
     resize: none;
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .confess__input--media {
     padding: 1.5em;
     height: 2rem;
+}
+
+.confess__input--media:first-of-type {
+    margin-bottom: 0.8rem;
 }
 
 .err-msg {
@@ -82,5 +91,18 @@ h2 {
 
     .apucp__logo {
         margin-top: 0;
+    }
+
+    .wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .confess__input--media:first-of-type {
+        margin-bottom: 0rem;
+    }
+
+    .confess__input--media {
+        width: 49%;
     }
 }

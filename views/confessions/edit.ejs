@@ -4,7 +4,7 @@
 <head>
     <%- include('../partials/head') %>
     <link rel="stylesheet" href="/css/confessions/edit.css">
-    <title>Edit #<%= confession._id %> - <%= siteTitle %></title>
+    <title>Edit <%= confession.apucpId %> - <%= siteTitle %></title>
 </head>
 
 <body>
@@ -35,13 +35,17 @@
 
                 <div class="form__item">
                     <h2>Attach Media (Optional)</h2>
-                    <p class="confess__content">You may
-                        <a href="https://imgur.com/upload" target="_blank">upload photo</a> or
-                        <a href="https://streamable.com" target="_blank">video</a>, 
-                        then copy and paste the media link into the textbox below.
+                    <p class="confess__content">You may upload
+                        <a href="https://imgur.com/upload" target="_blank">photo</a> or
+                        <a href="https://streamable.com" target="_blank">video</a>,
+                        then copy and paste the image address or video link into the textboxes below.
                     </p>
-                    <input type="text" name="confession[media]" class="confess__input confess__input--media"
-                        placeholder="The media link goes here ..." value="<%= confession.media %>">
+                    <div class="wrapper">
+                        <input type="text" name="confession[photo]" class="confess__input confess__input--media"
+                            placeholder="Image address ..." value="<%= locals.input ? input.photo : confession.photo %>">
+                        <input type="text" name="confession[video]" class="confess__input confess__input--media"
+                            placeholder="Video link ..." value="<%= locals.input ? input.video : confession.video %>">
+                    </div>
                 </div>
 
                 <input type="hidden" name="confession[treaty]" value="on">

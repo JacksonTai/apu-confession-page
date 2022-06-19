@@ -4,7 +4,7 @@
 <head>
     <%- include('../partials/head') %>
     <link rel="stylesheet" href="/css/confessions/show.css">
-    <title>#<%= confession._id %> - <%= siteTitle %></title>
+    <title><%= confession.apucpId %> - <%= siteTitle %></title>
 </head>
 
 <body>
@@ -18,17 +18,20 @@
             <h2 class="confession__time">Confession on: <%= confession.timestamp %></h2>
             <a href="/confessions/<%= confession._id %>/edit" class="confession__edit">
                 <i class="fa-solid fa-pen-to-square"></i> Edit</a>
-            <p class="confession__content"><%= confession.content %></p>
-            <% if (confession.media) { %>
-            <a href="<%= confession.media %>" target="_blank">View media</a>
+            <p class="confession__content"><%- confession.content %></p>
+            <% if (confession.photo) { %>
+            <a href="<%= confession.photo %>" target="_blank">View photo</a>
+            <% } %>
+            <% if (confession.video) { %>
+            <a href="<%= confession.video %>" target="_blank">View video</a>
             <% } %>
             <div class="confession__action" data-confession-id="<%= confession._id %>">
                 <% if (confession.status === 'Pending') { %>
-                <form action="/confessions/<%= confession._id %>/?_method=DELETE" class="confession__remove-form"
+                <form action="/confessions/<%= confession._id %>/?_method=DELETE" class="confession__action-form"
                     method="POST">
                     <button class="btn btn-remove">Remove</button>
                 </form>
-                <button class="btn btn-primary">Approve</button>
+                <button class="btn btn-primary btn-approve">Approve</button>
                 <% } else { %>
                 <p><%= confession.status %></p>
                 <% } %>
@@ -38,11 +41,11 @@
     <%- include('../partials/footer') %>
     <script src="/js/partials/navbar.js"></script>
     <script>
-        const apucpId = "<%= confession.apucpId %>"
-        const id = "<%= confession._id %>"
+        const confession = <%- JSON.stringify(confession) %>
     </script>
-    <script src="/js/confessions/show.js"></script>
+    <script async defer crossorigin="anonymous" src="/source/facebookSdk.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/confessions/show.js"></script>
 </body>
 
 </html>
