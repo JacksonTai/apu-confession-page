@@ -12,7 +12,6 @@ footer {
 .footer__title {
     font-family: var(--ff-montserrat-text);
     font-weight: 100;
-    text-decoration: 1px underline black;
     margin: 0 auto;
 }
 

@@ -4,13 +4,13 @@
 <head>
     <%- include('partials/head') %>
     <link rel="stylesheet" href="css/home.css">
-    <title>APUCP</title>
+    <title><%= siteTitle %></title>
 </head>
 
 <body>
     <%- include('partials/navbar') %>
     <main>
-        <img src="/img/home.jpg" class="home-img" alt="Home Image">
+        <img src="/img/home.png" class="home-img" alt="Home Image">
         <div class="home__content">
             <h1 class="home__content-title">Welcome to Asia Pacific Unviersity Confession Page (V4)</h1>
             <p>This is yet another APU Confession page, managed single-handedly by a Degree student.
@@ -19,9 +19,7 @@
                 hesitate to contact us via
                 <a href="https://www.facebook.com/APUCPv4" target="_blank">Facebook messenger</a>.
             </p>
-            <a href="/confessions/create" class="cta-btn btn btn-primary mt-1">
-                Confess
-            </a>
+            <a href="/confessions/create" class="cta-btn btn btn-primary mt-1">Confess</a>
         </div>
     </main>
     <%- include('partials/footer') %>

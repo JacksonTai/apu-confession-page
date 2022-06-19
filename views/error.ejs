@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head') %>
+    <style>
+        main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .not-found-img {
+            width: 85%;
+            max-width: 500px;
+        }
+    </style>
+    <title>Error - <%= siteTitle %></title>
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+    <main>
+        <img src="/img/error.png" class="not-found-img" alt="Page not found image">
+        <h1><%= err.message %></h1>
+        <h2><%= err.statusCode %></h2>
+    </main>
+    <%- include('partials/footer') %>
+    <script src="/js/partials/navbar.js"></script>
+</body>
+
+</html>

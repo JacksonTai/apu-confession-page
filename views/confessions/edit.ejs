@@ -3,16 +3,68 @@
 
 <head>
     <%- include('../partials/head') %>
-    <title>Edit Confession - APUCP</title>
+    <link rel="stylesheet" href="/css/confessions/edit.css">
+    <title>Edit <%= confession.apucpId %> - <%= siteTitle %></title>
 </head>
 
 <body>
     <%- include('../partials/navbar') %>
     <main>
-        <h1>Edit Confession</h1>
+        <a href="/confessions/<%= confession._id %>" class="btn btn-back">
+            <i class="fa-solid fa-right-from-bracket"></i> Back to Confession: <%= confession.apucpId %>
+        </a>
+        <div class="confession__item" href="/confessions/<%= confession._id %>">
+            <h1>Edit Confession: <%= confession.apucpId %></h1>
+            <h2 class="confession__time">Confession on: <%= confession.timestamp %></h2>
+
+            <form action="/confessions/<%= confession._id %>/?_method=PUT" class="confession__update-form"
+                method="POST">
+                <div class="form__item">
+                    <div class="confession__form-label">
+                        <h2>Confession Content</h2>
+                        <span class="confession__label-alert">*</span>
+                    </div>
+                    <p class="err-msg" data-err-msg="content">
+                        <% if (locals.errMsg) { %>
+                        <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.content %>
+                        <% } %>
+                    </p>
+                    <textarea name="confession[content]" class="confess__input confess__input--content"
+                        placeholder="Write your confession here ..."><%= locals.input ? input.content : confession.content %></textarea>
+                </div>
+
+                <div class="form__item">
+                    <h2>Attach Media (Optional)</h2>
+                    <p class="confess__content">You may upload
+                        <a href="https://imgur.com/upload" target="_blank">photo</a> or
+                        <a href="https://streamable.com" target="_blank">video</a>,
+                        then copy and paste the image address or video link into the textboxes below.
+                    </p>
+                    <div class="wrapper">
+                        <input type="text" name="confession[photo]" class="confess__input confess__input--media"
+                            placeholder="Image address ..." value="<%= locals.input ? input.photo : confession.photo %>">
+                        <input type="text" name="confession[video]" class="confess__input confess__input--media"
+                            placeholder="Video link ..." value="<%= locals.input ? input.video : confession.video %>">
+                    </div>
+                </div>
+
+                <input type="hidden" name="confession[treaty]" value="on">
+
+                <div class="confession__action" data-confession-id="<%= confession._id %>">
+                    <a href="/confessions/<%= confession._id %>" class="btn btn-cancel" type="button">Cancel</a>
+                    <button class="btn btn-primary btn-save">Save</button>
+                </div>
+            </form>
+        </div>
     </main>
     <%- include('../partials/footer') %>
     <script src="/js/partials/navbar.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const apucpId = "<%= confession.apucpId %>"
+        const id = "<%= confession._id %>"
+    </script>
+    <script src="/js/confessions/edit.js"></script>
 </body>
 
 </html>

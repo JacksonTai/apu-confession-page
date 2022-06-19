@@ -25,25 +25,49 @@ h2 {
     margin-bottom: 0.3rem;
 }
 
-.confess__entry,
-.confess__img {
+.confession__form-label {
+    display: flex;
+}
+
+.confession__label-alert {
+    color: var(--clr-delete);
+    font-size: 1.35rem;
+    margin-left: 0.35rem;
+}
+
+.confess__input {
     width: 100%;
 }
 
-.confess__entry {
+.confess__input--content {
     height: 18rem;
-    padding: 1.5em 2.5em;
+    margin-top: 0.5rem;
+    padding: 1.5em;
     resize: none;
 }
 
-.confess__img {
-    padding: 1.5em 2.5em;
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.confess__input--media {
+    padding: 1.5em;
     height: 2rem;
+}
+
+.confess__input--media:first-of-type {
+    margin-bottom: 0.8rem;
+}
+
+.err-msg {
+    color: var(--clr-delete);
 }
 
 .treaty {
     display: flex;
     align-items: center;
+    margin-bottom: 1.2rem;
 }
 
 .treaty__checkbox {
@@ -67,5 +91,18 @@ h2 {
 
     .apucp__logo {
         margin-top: 0;
+    }
+
+    .wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .confess__input--media:first-of-type {
+        margin-bottom: 0rem;
+    }
+
+    .confess__input--media {
+        width: 49%;
     }
 }

@@ -6,7 +6,7 @@ body {
 }
 
 main {
-    max-width: 400px;
+    max-width: 330px;
     min-height: fit-content;
     margin: 6rem auto;
     padding: 3em;
@@ -19,7 +19,7 @@ main {
     margin: 0 auto 2rem;
 }
 
-.signin__title {    
+.signin__title {
     font-family: var(--ff-montserrat-text);
     font-weight: 100;
     text-align: center;
@@ -34,13 +34,24 @@ main {
     margin-bottom: 0.5rem;
 }
 
+.err-msg {
+    margin: 0.5rem 0;
+    color: var(--clr-delete);
+}
+
 .form__item-input {
     width: 100%;
-    padding: 1.5em 1em;
-    height: 2rem;
+    padding: 1.3em;
+    height: 1.5rem;
 }
 
 .signin-btn {
     display: block;
     margin: 2rem auto;
+}
+
+.back {
+    display: block;
+    text-align: center;
+    text-decoration: none;
 }

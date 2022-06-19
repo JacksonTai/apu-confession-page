@@ -4,22 +4,40 @@
 <head>
     <%- include('../partials/head') %>
     <link rel="stylesheet" href="/css/admin/signin.css">
-    <title>Sign in - APUCP</title>
+    <title>Sign in - <%= siteTitle %></title>
 </head>
 
 <body>
     <main>
         <img src="/img/logo.jpg" class="apucp__logo" alt="APUCP Logo">
-        <form action="/confessions" method="POST">
+        <form action="/apucp-admin" method="POST">
             <div class="form__item">
                 <label for="username" class="form__item-label">Username</label>
-                <input type="text" name="" class="form__item-input" id="username">
+                <input type="text" name="signin[username]" class="form__item-input" id="username"
+                    value="<%= locals.input ? input.username : '' %>">
+                <p class="err-msg" data-err-msg="content">
+                    <% if (locals.errMsg && errMsg.username) { %>
+                    <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.username %>
+                    <% } %>
+                </p>
             </div>
             <div class="form__item">
                 <label for="password" class="form__item-label">Password</label>
-                <input type="password" name="" class="form__item-input" id="password">
+                <input type="password" name="signin[password]" class="form__item-input" id="password"
+                    value="<%= locals.input ? input.password : '' %>">
+                <p class="err-msg" data-err-msg="content">
+                    <% if (locals.errMsg && errMsg.password) { %>
+                    <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.password %>
+                    <% } %>
+                </p>
+                <p class="err-msg" data-err-msg="content">
+                    <% if (locals.invalidMsg) { %>
+                    <i class="fa-solid fa-triangle-exclamation"></i> <%= invalidMsg %>
+                    <% } %>
+                </p>
             </div>
             <button class="btn btn-primary signin-btn">Sign in</button>
+            <a href="/" class="back"><i class="fa-solid fa-right-from-bracket"></i> Back to Home</a>
         </form>
     </main>
 </body>

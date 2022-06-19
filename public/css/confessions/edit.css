@@ -1,0 +1,113 @@
+main {
+    max-width: 850px;
+    margin: 3rem auto;
+}
+
+.btn-back {
+    padding: 0;
+}
+
+h1 {
+    word-wrap: break-word;
+    margin: 1.5rem auto 0;
+}
+
+h2 {
+    margin-bottom: 0.3rem;
+}
+
+.confession__time {
+    font-family: var(--ff-montserrat-text);
+    font-weight: 100;
+}
+
+.form__item {
+    margin: 2rem auto;
+}
+
+.confession__form-label {
+    display: flex;
+}
+
+.confession__label-alert {
+    color: var(--clr-delete);
+    font-size: 1.35rem;
+    margin-left: 0.35rem;
+}
+
+.err-msg {
+    color: var(--clr-delete);
+}
+
+.confess__content {
+    margin-bottom: 1.3rem;
+}
+
+.confess__input {
+    width: 100%;
+}
+
+.confess__input--content {
+    height: 18rem;
+    margin-top: 0.5rem;
+    padding: 1.5em;
+    resize: none;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.confess__input--media {
+    padding: 1.5em;
+    height: 2rem;
+}
+
+.confess__input--media:first-of-type {
+    margin-bottom: 0.8rem;
+}
+
+.confession__action {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.btn-cancel {
+    border: 1px solid var(--clr-primary);
+    margin-bottom: 0.7rem;
+}
+
+.btn-cancel:hover {
+    background-color: var(--clr-primary);
+    color: #fff;
+}
+
+@media (min-width: 353px) {
+    .btn-cancel {
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 369.5px) {
+    .btn-cancel {
+        margin-right: 1rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .confess__input--media:first-of-type {
+        margin-bottom: 0rem;
+    }
+
+    .confess__input--media {
+        width: 49%;
+    }
+}

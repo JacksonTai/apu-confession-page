@@ -1,37 +1,127 @@
-const express = require('express')
-const app = express()
-const path = require('path')
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
+}
+
+const express = require('express');
+const app = express();
+const path = require('path');
+const helmet = require('helmet');
+const mongoose = require("mongoose");
+const session = require('express-session');
+const methodOverride = require("method-override");
+const mongoSanitize = require('express-mongo-sanitize');
+
+const ExpressError = require('./utils/expressError');
+
+// Database Connection
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/apucp';
+mongoose.connect(dbUrl, {
+    useUnifiedTopology: true,
+}).then(() => {
+    console.log(`Database connected: ${dbUrl} `);
+}).catch((e) => {
+    console.log(e);
+});
+
+// Content Security Policy (CSP) Configuration
+const connectSrcUrls = [
+    `https://graph.facebook.com/v14.0/${process.env.FB_PAGE_ID}/feed`,
+    `https://graph.facebook.com/v14.0/${process.env.FB_PAGE_ID}/photos`
+]
+const scriptSrcUrls = [
+    "https://cdn.jsdelivr.net",
+    "https://connect.facebook.net/en_US/sdk.js"
+];
+const styleSrcUrls = [
+    "https://cdnjs.cloudflare.com",
+];
+const fontSrcUrls = [
+    "https://cdnjs.cloudflare.com",
+];
 
 // Middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride("_method"));
+app.use(mongoSanitize());
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrcElem: ["'self'", "'unsafe-inline'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://www.facebook.com"
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    },
+}));
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        name: 'session',
+        httpOnly: true,
+        // secure: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}));
+app.use((req, res, next) => {
+    res.locals.siteTitle = 'APUCP (V4)';
+    res.locals.currentYear = new Date().getFullYear();
+    res.locals.currentAdmin = req.session.admin_id;
+    next();
+});
 
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // Route
-app.use('/confessions', require('./routes/confessions'))
+app.use('/confessions', require('./routes/confessions'));
+app.use('/blacklist', require('./routes/blacklist'));
+app.use('/apucp-admin', require('./routes/admin'));
+app.use('/', require('./routes/pages'));
 
-// Routing
-app.get('/', (req, res) => {
-    res.render('home')
-})
+// Error Handler
+app.all("*", (req, res, next) => {
+    next(new ExpressError("Page not found", 404));
+});
 
-app.get('/disclaimer', (req, res) => {
-    res.render('disclaimer')
-})
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) {
+        err.message = "SOMETHING WENT WRONG.";
+    }
+    console.log(err)
+    res.status(statusCode).render("error", { err });
+});
 
-app.get('/guidelines', (req, res) => {
-    res.render('guidelines')
-})
+// Setup server
+const port = process.env.PORT || 3000;
+/* HTTP */
+// app.listen(port, () => {
+//     console.log(`Listening on port: ${port}`);
+// });
 
-app.get('/information', (req, res) => {
-    res.render('information')
-})
+/* HTTPS */
+const fs = require("fs");
+const https = require("https");
+https
+    .createServer(
+        {
+            key: fs.readFileSync("server.key"),
+            cert: fs.readFileSync("server.cert"),
+        }, app)
+    .listen(port, function () {
+        console.log(`Listening on port: ${port}`);
+    });
 
-app.get('/apucp-admin', (req, res) => {
-    res.render('admin/signin')
-})
-
-app.listen(process.env.PORT || 3000, () => {
-    console.log('listening port 3000')
-})

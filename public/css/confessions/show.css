@@ -1,0 +1,52 @@
+main {
+    max-width: 850px;
+    margin: 3rem auto;
+}
+
+.btn-back {
+    padding: 0;
+}
+
+h1 {
+    word-wrap: break-word;
+    margin: 1.5rem auto 0;
+}
+
+.confession__time {
+    font-family: var(--ff-montserrat-text);
+    font-weight: 100;
+}
+
+.confession__edit {
+    display: inline-block;
+    color: var(--clr-link);
+    margin: 0.3rem 0 1.5rem;
+    text-decoration: none;
+}
+
+.confession__content {
+    margin: 0 auto 2.5rem;
+}
+
+.confession__action {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.btn-remove {
+    margin-bottom: 0.7rem;
+}
+
+@media (min-width: 353px) {
+    .btn-remove {
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 369.5px) {
+    .btn-remove {
+        margin-right: 1rem;
+    }
+}

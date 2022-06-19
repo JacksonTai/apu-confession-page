@@ -3,16 +3,44 @@
 
 <head>
     <%- include('../partials/head') %>
-    <title>Confessions - APUCP</title>
+    <link rel="stylesheet" href="/css/confessions/index.css">
+    <title>Confessions - <%= siteTitle %></title>
 </head>
 
 <body>
     <%- include('../partials/navbar') %>
-    <main>
+    <main <%- count ? '' : 'class="empty-list-main"' %>>
         <h1>Confessions</h1>
+        <% if (count) { %>
+        <h2 class="confessison-count">Total pending: <%= count %></h2>
+        <section class="confession__list shadow">
+            <% for (let confession of confessions) { %>
+            <a class="confession__item" href="/confessions/<%= confession._id %>" id="<%= confession._id %>">
+                <p class="confession__id"><%= confession.apucpId %></p>
+                <div class="wrapper">
+                    <p class="confession__content">
+                        <%= confession.content %>
+                    </p>
+                    <span><%= confession.status %></span>
+                </div>
+            </a>
+            <% } %>
+        </section>
+        <% if (viewMore) { %>
+        <button class="btn btn-view-more">View more</button>
+        <% } %>
+        <% } else { %>
+        <h3 class="empty-list-title">The list is empty!</h3>
+        <p class="empty-list-msg">Either no confessions submitted for today, or the list has finished.</p>
+        <img src="/img/empty.png" class="empty-list-img" alt="Girl showing paper with an empty list">
+        <% } %>
     </main>
     <%- include('../partials/footer') %>
     <script src="/js/partials/navbar.js"></script>
+    <script>
+        const count = parseInt("<%= count %>")
+    </script>
+    <script src="/js/confessions/index.js"></script>
 </body>
 
 </html>
