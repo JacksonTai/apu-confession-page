@@ -2,7 +2,7 @@ const Confession = require('../models/confessions');
 const FB = require('fb')
 
 module.exports.create = async (req, res) => {
-    const queueNum = await Confession.find().count();
+    const queueNum = await Confession.find().countDocuments({});
     res.render('confessions/create', { queueNum });
 };
 
