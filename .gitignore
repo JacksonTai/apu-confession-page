@@ -1,2 +1,5 @@
 node_modules
+.env
+server.key
+server.cert
 /seeds/confessions.json
