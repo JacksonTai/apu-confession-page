@@ -113,20 +113,20 @@ app.use((err, req, res, next) => {
 // Setup server
 const port = process.env.PORT || 3000;
 /* HTTP */
-// app.listen(port, () => {
-//     console.log(`Listening on port: ${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Listening on port: ${port}`);
+});
 
 /* HTTPS */
-const fs = require("fs");
-const https = require("https");
-https
-    .createServer(
-        {
-            key: fs.readFileSync("server.key"),
-            cert: fs.readFileSync("server.cert"),
-        }, app)
-    .listen(port, function () {
-        console.log(`Listening on port: ${port}`);
-    });
+// const fs = require("fs");
+// const https = require("https");
+// https
+//     .createServer(
+//         {
+//             key: fs.readFileSync("server.key"),
+//             cert: fs.readFileSync("server.cert"),
+//         }, app)
+//     .listen(port, function () {
+//         console.log(`Listening on port: ${port}`);
+//     });
 
