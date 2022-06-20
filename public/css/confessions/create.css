@@ -35,6 +35,10 @@ h2 {
     margin-left: 0.35rem;
 }
 
+.treaty-label {
+    cursor: pointer;
+}
+
 .confess__input {
     width: 100%;
 }
@@ -70,7 +74,7 @@ h2 {
     margin-bottom: 1.2rem;
 }
 
-.treaty__checkbox {
+.confess__input--treaty {
     width: 1.8rem;
     height: 1.8rem;
     margin-right: 0.8rem;

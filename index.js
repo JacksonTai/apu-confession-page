@@ -8,6 +8,7 @@ const path = require('path');
 const helmet = require('helmet');
 const mongoose = require("mongoose");
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const methodOverride = require("method-override");
 const mongoSanitize = require('express-mongo-sanitize');
 
@@ -22,7 +23,7 @@ mongoose.connect(dbUrl, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
-    console.log("Database Connected successfully");
+    console.log(`Database Connected: ${dbUrl}`);
 });
 
 // Content Security Policy (CSP) Configuration
@@ -66,9 +67,10 @@ app.use(helmet({
     },
 }));
 app.use(session({
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || 'devSecret',
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: dbUrl }),
     cookie: {
         name: 'session',
         httpOnly: true,
@@ -81,6 +83,7 @@ app.use((req, res, next) => {
     res.locals.siteTitle = 'APUCP (V4)';
     res.locals.currentYear = new Date().getFullYear();
     res.locals.currentAdmin = req.session.admin_id;
+    res.locals.tempConfession = req.session.tempConfession;
     next();
 });
 
@@ -110,20 +113,20 @@ app.use((err, req, res, next) => {
 // Setup server
 const port = process.env.PORT || 3000;
 /* HTTP */
-app.listen(port, () => {
-    console.log(`Listening on port: ${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Listening on port: ${port}`);
+// });
 
 /* HTTPS */
-// const fs = require("fs");
-// const https = require("https");
-// https
-//     .createServer(
-//         {
-//             key: fs.readFileSync("server.key"),
-//             cert: fs.readFileSync("server.cert"),
-//         }, app)
-//     .listen(port, function () {
-//         console.log(`Listening on port: ${port}`);
-//     });
+const fs = require("fs");
+const https = require("https");
+https
+    .createServer(
+        {
+            key: fs.readFileSync("server.key"),
+            cert: fs.readFileSync("server.cert"),
+        }, app)
+    .listen(port, function () {
+        console.log(`Listening on port: ${port}`);
+    });
 
