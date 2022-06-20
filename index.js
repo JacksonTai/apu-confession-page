@@ -22,7 +22,7 @@ mongoose.connect(dbUrl, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
-    console.log("Database Connected successfully");
+    console.log(`Database Connected: ${dbUrl}`);
 });
 
 // Content Security Policy (CSP) Configuration
@@ -66,7 +66,7 @@ app.use(helmet({
     },
 }));
 app.use(session({
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || 'devSecret',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -81,6 +81,7 @@ app.use((req, res, next) => {
     res.locals.siteTitle = 'APUCP (V4)';
     res.locals.currentYear = new Date().getFullYear();
     res.locals.currentAdmin = req.session.admin_id;
+    res.locals.tempConfession = req.session.tempConfession;
     next();
 });
 

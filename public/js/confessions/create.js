@@ -6,7 +6,7 @@ contentInput.addEventListener('input', function () {
     }
 })
 
-const treatyCheckbox = document.querySelector('.treaty__checkbox');
+const treatyCheckbox = document.querySelector('.confess__input--treaty');
 treatyCheckbox.addEventListener('change', function () {
     const treatyErrMsg = document.querySelector('[data-err-msg="treaty"]')
     if (this.checked && this.value == 'on') {
@@ -37,3 +37,13 @@ if (urlParams.get('status') == "submitted") {
         }
     });
 }
+
+const confessionForm = document.querySelector('.confession__form');
+window.addEventListener('beforeunload', async function (e) {
+    const formData = new FormData(confessionForm);
+    await fetch(`${window.location.href.split('confessions')[0]}confessions/tempConfession`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData)
+    })
+});
