@@ -17,7 +17,8 @@
             content on the page.
         </p>
         <p class="confess__content">Please check <a href="/information" target="_blank">Common Confessions/Questions</a>
-            section before you write anything. Chances are the question have been asked for many times.
+            section before you write anything. Chances are the question have been asked for many times. The confession
+            will automatically be saved as draft for a maximum of 7 days once the page is closed.
         </p>
         <p class="confess__content">
             There are currently <span class="queue-num"><%= queueNum %></span> confession ahead of you awaiting to be
@@ -35,8 +36,9 @@
                     <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.content %>
                     <% } %>
                 </p>
+                <% let tempContent = locals.tempConfession ? locals.tempConfession.content : '' %>
                 <textarea name="confession[content]" class="confess__input confess__input--content"
-                    placeholder="Write your confession here ..."><%= locals.input ? input.content : '' %></textarea>
+                    placeholder="Write your confession here ..."><%= locals.input ? input.content : tempContent %></textarea>
             </div>
 
             <div class="form__item">
@@ -47,10 +49,12 @@
                     then copy and paste the image address or video link into the textboxes below.
                 </p>
                 <div class="wrapper">
+                    <% let tempPhoto = locals.tempConfession ? locals.tempConfession.photo : '' %>
                     <input type="text" name="confession[photo]" class="confess__input confess__input--media"
-                        placeholder="Image address ..." value="<%= locals.input ? input.photo : '' %>">
+                        placeholder="Image address ..." value="<%= locals.input ? input.photo : tempPhoto %>">
+                    <% let tempVideo = locals.tempConfession ? locals.tempConfession.video : '' %>
                     <input type="text" name="confession[video]" class="confess__input confess__input--media"
-                        placeholder="Video link ..." value="<%= locals.input ? input.video : '' %>">
+                        placeholder="Video link ..." value="<%= locals.input ? input.video : tempVideo %>">
                 </div>
             </div>
 
@@ -63,9 +67,12 @@
                     <a href="/guidelines" target="_blank">guidelines</a> and will not get the confession page being zucc
                     again? Breach of treaty will lower the chance of it being posted.</p>
                 <div class="treaty">
-                    <input type="checkbox" name="confession[treaty]" id="treaty" class="treaty__checkbox"
+                    <input type="checkbox" name="confession[treaty]" id="treaty"
+                        class="confess__input confess__input--treaty"
                         <%= locals.input && locals.input.treaty ? 'checked' : '' %>>
-                    <label for="treaty">Yes, my confession will not lead to the page getting zucc.</label>
+                    <label for="treaty" class="treaty-label">
+                        Yes, my confession will not lead to the page getting zucc.
+                    </label>
                 </div>
                 <p class="err-msg" data-err-msg="treaty">
                     <% if (locals.errMsg && errMsg.treaty) { %>
@@ -83,6 +90,7 @@
         </form>
     </main>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/confessions/create.js"></script>
 </body>
 
