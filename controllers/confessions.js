@@ -7,6 +7,7 @@ module.exports.create = async (req, res) => {
 };
 
 module.exports.store = async (req, res) => {
+    delete req.session.tempConfession;
     let prevConfession = await Confession.findOne().sort({ _id: 'desc' }).select('_id');
     let { confession } = req.body;
     confession._id = prevConfession ? prevConfession._id + 1 : 1;
@@ -115,4 +116,9 @@ module.exports.approve = async (req, res) => {
             }
         );
     }
+}
+
+module.exports.tempConfession = async (req, res) => {
+    req.session.tempConfession = req.body.confession;
+    res.send(req.session.tempConfession)
 }
