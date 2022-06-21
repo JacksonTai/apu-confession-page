@@ -1,10 +1,24 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+const CounterSchema = Schema({
+    _id: {
+        type: Number,
+        required: true,
+        default: 1,
+    },
+    seq: {
+        type: Number,
+        default: 1
+    }
+});
+const Counter = mongoose.model('counter', CounterSchema);
+
 const ConfessionSchema = new Schema({
     _id: {
         type: Number,
-        required: true
+        required: true,
+        default: 1,
     },
     time: {
         type: Date,
@@ -28,6 +42,7 @@ const ConfessionSchema = new Schema({
     },
 }, { _id: false });
 
+// Virtual
 ConfessionSchema.virtual('timestamp').get(function () {
     let timestamp = this.time.toISOString().replace('T', '-').split('-');
     let time = this.time.toString().split(' ')[4];
@@ -39,5 +54,17 @@ ConfessionSchema.virtual('apucpId').get(function () {
     let zero = '0'
     return `#APUCP${zero.repeat(zeroDigit) + this._id}`;
 })
+
+// Middleware
+ConfessionSchema.pre("save", async function () {
+    let counter = await Counter.countDocuments();
+    if (counter === 1) {
+        let count = await Counter.findById(1)
+        this._id = count.seq + 1;
+        await Counter.findByIdAndUpdate(1, { $inc: { seq: 1 } });
+    } else {
+        await new Counter({ id: 1, seq: 1 }).save()
+    }
+});
 
 module.exports = mongoose.model('Confession', ConfessionSchema);
