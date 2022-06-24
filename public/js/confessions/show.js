@@ -15,8 +15,8 @@ removeBtn.addEventListener('click', async function () {
     Swal.fire({
         icon: 'warning',
         title: `Are you sure you want to remove confession: ${apucpId}?`,
-        html: '<p>This will permenantly remove the confession information ' +
-            'including the id, content, media links, time posted and status from the database.</p>',
+        html: '<span>This will permenantly remove the confession information ' +
+            'including the id, content, media links, time posted and status from the database.</span>',
         showDenyButton: true,
         showCancelButton: true,
         showConfirmButton: false,

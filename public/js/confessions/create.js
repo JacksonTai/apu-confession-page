@@ -23,8 +23,8 @@ if (urlParams.get('status') == "submitted") {
         icon: "success",
         title: "Your confession has been submitted. 😃",
         html: `<h3>Your confession ID: ${decodeURIComponent(urlParams.get('id'))}</h3>` +
-            `<p>Confessions will be uploaded as soon as akari noticed. Depending on your luck, 
-                  it would be within minutes, hours or days.</p>`,
+            `<span>Confessions will be uploaded as soon as akari noticed. Depending on your luck, 
+                  it would be within minutes, hours or days.</span>`,
         allowOutsideClick: false,
         showDenyButton: false,
         showCancelButton: false,

@@ -6,7 +6,7 @@ main {
 .guidelines__content-title {
     width: fit-content;
     margin-bottom: 0.8rem;
-    border-bottom: 0.15rem solid var(--clr-title);
+    border-bottom: 0.15rem solid var(--clr-text);
 }
 
 .guidelines__content-title-2 {

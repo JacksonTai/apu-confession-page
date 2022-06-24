@@ -1,17 +1,25 @@
 .navbar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 85%;
+    max-width: 75%;
     margin: 1rem auto;
     padding-top: 1.5rem;
     position: relative;
 }
 
 .navbar__logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navbar__logo-img {
+    display: block;
     height: fit-content;
+    margin-right: 0.8rem;
     align-self: flex-start;
+}
+
+.navbar__logo h2 {
+    pointer-events: none;
 }
 
 .navbar__list {
@@ -19,10 +27,6 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-}
-
-.navbar__list-item:first-of-type {
-    padding-top: 2.2em;
 }
 
 .navbar__list-item {
@@ -49,11 +53,27 @@
 .bar {
     height: 2.5px;
     width: 100%;
-    background-color: #000000;
+    background-color: var(--clr-text);
 }
 
-@media (min-width: 800px) {
+.navbar__theme-btn {
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.navbar__theme-btn::before {
+    line-height: 0;
+}
+
+.navbar__theme-btn:hover {
+    text-decoration: none;
+}
+
+@media (min-width: 900px) {
     .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         flex-direction: row;
         padding: 1.5rem 0;
     }
@@ -67,7 +87,6 @@
         flex-direction: row;
         justify-content: flex-end;
         width: 82%;
-        margin-right: auto;
     }
 
     .navbar__list-item:first-of-type,
@@ -84,4 +103,5 @@
 
 .active {
     display: flex;
+    margin-top: 1.3rem;
 }
