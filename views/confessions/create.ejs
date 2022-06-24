@@ -9,7 +9,10 @@
 
 <body>
     <main>
-        <img src="/img/logo.jpg" class="apucp__logo" alt="APUCP Logo">
+        <div class="apucp__logo">
+            <img src="/img/logo.png" class="navbar__logo-img" alt="Logo">
+            <h2>APUCP</h2>
+        </div>
         <p class="confess__content">Worried about your privacy when filling this form? Read our
             <a href="https://bit.ly/3lkmGuJ" target="_blank">Form Transparency</a>. Akari is a human and is bound to
             make mistake, feel free to contact us on
@@ -82,13 +85,14 @@
             </div>
 
             <div class="form__item form__item--action">
-                <a href="/" class="btn">
+                <a href="/" class="btn btn--back">
                     <i class="fa-solid fa-right-from-bracket"></i> Back
                 </a>
                 <button class="btn btn-primary">Submit</button>
             </div>
         </form>
     </main>
+    <script src="/js/partials/theme.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/confessions/create.js"></script>

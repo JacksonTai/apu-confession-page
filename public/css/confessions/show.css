@@ -37,6 +37,7 @@ h1 {
 
 .btn-remove {
     margin-bottom: 0.7rem;
+    color: #16181D;
 }
 
 @media (min-width: 353px) {

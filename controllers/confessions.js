@@ -57,7 +57,7 @@ module.exports.api = async (req, res) => {
                                     <p class="confession__content">
                                         ${confession.content}
                                     </p>
-                                    <span>${confession.status}</span>
+                                    <p>${confession.status}</p>
                                 </div>
                             </a>`
     }

@@ -76,13 +76,13 @@ h2 {
 }
 
 .btn-cancel {
-    border: 1px solid var(--clr-primary);
+    border: 1px solid var(--clr-link);
     margin-bottom: 0.7rem;
 }
 
 .btn-cancel:hover {
-    background-color: var(--clr-primary);
-    color: #fff;
+    background-color: var(--clr-link);
+    color: var(--clr-theme);
 }
 
 @media (min-width: 353px) {
