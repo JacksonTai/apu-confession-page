@@ -9,7 +9,10 @@
 
 <body>
     <main>
-        <img src="/img/logo.jpg" class="apucp__logo" alt="APUCP Logo">
+        <div class="apucp__logo">
+            <img src="/img/logo.png" class="navbar__logo-img" alt="Logo">
+            <h2>APUCP</h2>
+        </div>
         <form action="/apucp-admin" method="POST">
             <div class="form__item">
                 <label for="username" class="form__item-label">Username</label>
@@ -37,9 +40,10 @@
                 </p>
             </div>
             <button class="btn btn-primary signin-btn">Sign in</button>
-            <a href="/" class="back"><i class="fa-solid fa-right-from-bracket"></i> Back to Home</a>
+            <a href="/" class="btn--back"><i class="fa-solid fa-right-from-bracket"></i> Back to Home</a>
         </form>
     </main>
+    <script src="/js/partials/theme.js"></script>
 </body>
 
 </html>

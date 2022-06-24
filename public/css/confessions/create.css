@@ -4,8 +4,14 @@ main {
 }
 
 .apucp__logo {
-    display: block;
-    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.apucp__logo h2 {
+    margin: 0;
 }
 
 .confess__content {
