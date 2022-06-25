@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/blacklist/index.css">
+    <title>Blacklist Word- <%= siteTitle %></title>
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+    <main>
+        <h1>Blacklist Word</h1>
+        <form action="/blacklistWord" class="blacklist__form" method="POST">
+            <input type="text" name="blacklistWord[content]" class="blacklist__input--word" placeholder="Add words ..."
+                autofocus>
+            <p class="err-msg">
+                <% if (locals.errMsg && errMsg.content) { %>
+                <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.content %>
+                <% } %>
+            </p>
+            <button class="btn btn-primary blacklist__add-btn">Add</button>
+        </form>
+        <% if (locals.blacklistWords.length > 0) { %>
+        <section class="blacklist shadow">
+            <% for (let blacklistWord of blacklistWords) { %>
+            <div class="blacklist__item">
+                <p class="blacklist__word"><%= blacklistWord.content %></p>
+                <i class="blacklist__delete-btn fa-solid fa-trash-can" data-id="<%= blacklistWord._id %>"></i>
+            </div>
+            <% } %>
+        </section>
+        <% } %>
+    </main>
+    <%- include('../partials/footer') %>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/blacklistWord/index.js"></script>
+    <script src="/js/partials/navbar.js"></script>
+</body>
+
+</html>
