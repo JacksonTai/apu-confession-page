@@ -1,0 +1,50 @@
+h1 {
+    text-align: center;
+    margin: 1.5rem auto;
+}
+
+.blacklist__form {
+    max-width: 415px;
+    margin: 0 auto;
+}
+
+.blacklist__input--word {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding: 1em 1.5em;
+}
+
+.err-msg {
+    color: var(--clr-delete);
+}
+
+.blacklist__add-btn {
+    display: block;
+    margin: 1.2rem auto;   
+    width: 100%;
+}
+
+.blacklist {
+    max-width: 415px;
+    margin: 1.3rem auto 8rem;
+}
+
+.blacklist__item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #A9ACAA;
+    padding: 1em 1.6em;
+}
+
+.blacklist__item:last-of-type {
+    border-bottom: none;
+}
+
+.blacklist__word {
+    width: 90%;
+    word-wrap: break-word;
+}
+
+.blacklist__delete-btn {
+    cursor: pointer;
+}

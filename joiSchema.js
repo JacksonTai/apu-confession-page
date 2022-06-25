@@ -29,3 +29,12 @@ module.exports.signinSchema = Joi.object({
             .messages({ "string.empty": "Enter your password." }),
     }).required().messages({ "string.empty": "Enter your password." })
 }).options(opt);
+
+module.exports.blacklistWordSchema = Joi.object({
+    blacklistWord: Joi.object({
+        content: Joi.string()
+            .trim()
+            .required()
+            .messages({ "string.empty": "Enter blacklist word" }),
+    }).required()
+}).options(opt);
