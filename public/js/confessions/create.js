@@ -4,7 +4,9 @@ const getBlacklistWords = async () => {
     const { data } = await axios.get(`${rootUrl}blacklistWord/api`);
     blacklistWords = data.map(word => (word.content));
 }
-getBlacklistWords();
+getBlacklistWords().then(()=>{
+    checkBlacklistWord(content.value.trim().toLowerCase());
+});
 
 const detectedWordContainer = document.querySelector('.detected-word-container')
 let detectedWordCount = 0;
@@ -43,8 +45,8 @@ const checkBlacklistWord = (input) => {
     }
 }
 
-const contentInput = document.querySelector('.confess__input--content');
-contentInput.addEventListener('input', function () {
+const content = document.querySelector('.confess__input--content');
+content.addEventListener('input', function () {
     const input = this.value.trim().toLowerCase();
     checkBlacklistWord(input);
     if (detectedWordCount == 0) {

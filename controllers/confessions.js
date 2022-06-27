@@ -1,4 +1,5 @@
 const Confession = require('../models/confessions');
+const BlacklistWord = require('../models/blacklistWord')
 const FB = require('fb')
 
 module.exports.create = async (req, res) => {
@@ -22,11 +23,30 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.show = async (req, res) => {
-    Confession.findById(req.params.id).exec((err, doc) => {
+    Confession.findById(req.params.id).exec(async (err, doc) => {
         let confession = doc.toObject();
+        let { content } = confession
         confession.apucpId = doc.apucpId;
         confession.timestamp = doc.timestamp;
-        confession.content = confession.content.replaceAll("\n", "<br>");
+        confession.content = content.replaceAll('\n', '<br>');
+
+        // Check for blacklist word and highlight it.
+        let docs = await BlacklistWord.find().sort({ _id: 'desc' })
+        const blacklistWords = docs.map(doc => (doc.content))
+
+        let words = [];
+        for (let blacklistWord of blacklistWords) {
+            if (content.toLowerCase().includes(blacklistWord)) {
+                let regex = new RegExp(blacklistWord, 'gi')
+                words.push(...content.match(regex)) 
+            }
+        }
+        if (words.length > 0) {
+            console.log(words)
+            for (let word of words) {
+                confession.content = confession.content.replace(word, `<mark>${word}</mark>`)
+            }
+        }
         res.render('confessions/show', { confession });
     });
 };
