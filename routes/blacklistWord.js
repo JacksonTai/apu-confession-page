@@ -5,10 +5,11 @@ const blacklistWord = require('../controllers/blacklistWord');
 const { authenticate, sanitizeHtml, validateBlacklistWord } = require('../middleware');
 const catchAsync = require('../utils/catchAsync');
 
+router.get('/api', catchAsync(blacklistWord.api))
+
 router
     .route('/')
     .get(
-        authenticate,
         catchAsync(blacklistWord.index)
     )
     .post(
