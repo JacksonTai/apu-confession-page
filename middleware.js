@@ -39,6 +39,20 @@ module.exports.validateBlacklistWord = async (req, res, next) => {
     next();
 }
 
+module.exports.checkBlacklistWord = async (req, res, next) => {
+    const { confession } = req.body
+    let docs = await BlacklistWord.find().sort({ _id: 'desc' })
+    const blacklistWords = docs.map(doc => (doc.content))
+   
+    for (let blacklistWord of blacklistWords) {
+        if (confession.content.toLowerCase().includes(blacklistWord)) {
+            let regex = new RegExp(blacklistWord, 'gi')
+            confession.status = confession.content.match(regex) ? 'Blacklisted' : null
+        }
+    }
+    next();
+}
+
 module.exports.authenticate = async (req, res, next) => {
     // Turn caching off.
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');

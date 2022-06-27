@@ -18,6 +18,11 @@
             <h2 class="confession__time">Confession on: <%= confession.timestamp %></h2>
             <a href="/confessions/<%= confession._id %>/edit" class="confession__edit">
                 <i class="fa-solid fa-pen-to-square"></i> Edit</a>
+            <% if (confession.status === 'Blacklisted') { %>
+            <p class="confession__blacklist-msg"><i class="fa-solid fa-triangle-exclamation"></i>
+                Confession consists of blacklist words.
+            </p>
+            <% } %>
             <p class="confession__content"><%- confession.content %></p>
             <% if (confession.photo) { %>
             <a href="<%= confession.photo %>" target="_blank">View photo</a>
@@ -26,15 +31,11 @@
             <a href="<%= confession.video %>" target="_blank">View video</a>
             <% } %>
             <div class="confession__action" data-confession-id="<%= confession._id %>">
-                <% if (confession.status === 'Pending') { %>
                 <form action="/confessions/<%= confession._id %>/?_method=DELETE" class="confession__action-form"
                     method="POST">
                     <button class="btn btn-remove">Remove</button>
                 </form>
                 <button class="btn btn-primary btn-approve">Approve</button>
-                <% } else { %>
-                <p><%= confession.status %></p>
-                <% } %>
             </div>
         </div>
     </main>
@@ -43,7 +44,6 @@
     <script>
         const confession = <%- JSON.stringify(confession) %>
     </script>
-    <script async defer crossorigin="anonymous" src="/source/facebookSdk.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/confessions/show.js"></script>
 </body>
