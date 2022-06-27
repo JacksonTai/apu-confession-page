@@ -34,11 +34,17 @@
                     <h2>Confession Content</h2>
                     <span class="confession__label-alert">*</span>
                 </div>
+                <% if (locals.errMsg && errMsg.content) { %>
                 <p class="err-msg" data-err-msg="content">
-                    <% if (locals.errMsg && errMsg.content) { %>
                     <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.content %>
-                    <% } %>
                 </p>
+                <% } %>
+                <p class="err-msg" data-err-msg="blacklist">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Please be aware that your confession will be flagged for review as it contains the following
+                    <a href="/blacklistWord" target="_blank">blacklist word</a>:  
+                </p>
+                <div class="detected-word-container"></div>
                 <% let tempContent = locals.tempConfession ? locals.tempConfession.content : '' %>
                 <textarea name="confession[content]" class="confess__input confess__input--content"
                     placeholder="Write your confession here ..."><%= locals.input ? input.content : tempContent %></textarea>
@@ -94,6 +100,7 @@
     </main>
     <script src="/js/partials/theme.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/confessions/create.js"></script>
     <% if (locals.errMsg && errMsg.treaty && !errMsg.content) { %>
     <script>

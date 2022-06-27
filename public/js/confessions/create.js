@@ -1,10 +1,59 @@
-const contentInput = document.querySelector('.confess__input--content');
-contentInput.addEventListener('input', function () {
-    if (this.value) {
-        const contentErrMsg = document.querySelector('[data-err-msg="content"]');
+let blacklistWords;
+const getBlacklistWords = async () => {
+    const rootUrl = window.location.href.split('confessions')[0];
+    const { data } = await axios.get(`${rootUrl}blacklistWord/api`);
+    blacklistWords = data.map(word => (word.content));
+}
+getBlacklistWords();
+
+const detectedWordContainer = document.querySelector('.detected-word-container')
+let detectedWordCount = 0;
+const addDetectedWord = (blacklistWord) => {
+    // Check if the same blacklist word has been created and added.
+    if (!document.querySelector(`[data-word="${blacklistWord}"]`)) {
+        let detectedWord = document.createElement('span');
+        detectedWord.className = 'detected-blacklist-word';
+        detectedWord.textContent = blacklistWord;
+        detectedWord.dataset.word = blacklistWord;
+        detectedWordContainer.append(detectedWord)
+    }
+    // Counter for removing error message for blacklist word.
+    detectedWordCount = detectedWordContainer.children.length;
+}
+
+const contentErrMsg = document.querySelector('[data-err-msg="content"]');
+const removeContentErrMsg = () => {
+    if (contentErrMsg) {
         contentErrMsg.style.display = "none"
     }
-})
+}
+
+const blacklistErrMsg = document.querySelector('[data-err-msg="blacklist"]');
+const checkBlacklistWord = (input) => {
+    for (let blacklistWord of blacklistWords) {
+        let detectedWord = document.querySelector(`[data-word="${blacklistWord}"]`)
+        if (input.includes(blacklistWord) && !detectedWord) {
+            blacklistErrMsg.style.display = "block";
+            addDetectedWord(blacklistWord)
+            return
+        } else if (!input.includes(blacklistWord) && detectedWord) {
+            detectedWordContainer.removeChild(detectedWord);
+            detectedWordCount -= 1;
+        }
+    }
+}
+
+const contentInput = document.querySelector('.confess__input--content');
+contentInput.addEventListener('input', function () {
+    const input = this.value.trim().toLowerCase();
+    checkBlacklistWord(input);
+    if (detectedWordCount == 0) {
+        blacklistErrMsg.style.display = "none";
+    }
+    if (input) {
+        removeContentErrMsg();
+    };
+});
 
 const treatyCheckbox = document.querySelector('.confess__input--treaty');
 treatyCheckbox.addEventListener('change', function () {

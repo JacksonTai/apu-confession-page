@@ -11,6 +11,11 @@ module.exports.index = async (req, res) => {
     res.render('blacklistWord', { blacklistWords });
 }
 
+module.exports.api = async (req, res) => {
+    const blacklistWords = await BlacklistWord.find().sort({ _id: 'desc' })
+    res.json(blacklistWords)
+}
+
 module.exports.destroy = async (req, res) => {
     await BlacklistWord.findByIdAndDelete(req.params.id);
     res.redirect('/blacklistWord');

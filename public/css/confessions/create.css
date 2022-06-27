@@ -74,6 +74,29 @@ h2 {
     color: var(--clr-delete);
 }
 
+p[data-err-msg="blacklist"],
+p[data-err-msg="blacklist"] a,
+.detected-blacklist-word {
+    color: #F7B217;
+}
+
+p[data-err-msg="blacklist"] {
+    display: none;
+    margin: 0 0.3rem 0.3rem 0;
+}
+
+.detected-word-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.detected-blacklist-word {
+    margin: 0 0.2rem 0.35rem;
+    padding: 0.18rem 0.8rem;
+    border-radius: 10px;
+    border: 1px solid #d59b12;
+}
+
 .treaty {
     display: flex;
     align-items: center;
