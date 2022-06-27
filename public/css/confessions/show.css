@@ -17,6 +17,17 @@ h1 {
     font-weight: 100;
 }
 
+.confession__blacklist-msg,
+.fa-triangle-exclamation {
+    width: fit-content;
+    color: #F7B217;
+}
+
+.confession__blacklist-msg {
+    border-bottom: 2px dashed #F7B217;
+    margin-bottom: 0.8rem;
+}
+
 .confession__edit {
     display: inline-block;
     color: var(--clr-link);

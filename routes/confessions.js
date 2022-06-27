@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 
 const confessions = require('../controllers/confessions');
-const { authenticate, validateConfession, sanitizeHtml } = require('../middleware');
+const { authenticate, validateConfession, sanitizeHtml, checkBlacklistWord } = require('../middleware');
 const catchAsync = require('../utils/catchAsync');
 
 router.get('/create', catchAsync(confessions.create));
@@ -15,6 +15,7 @@ router
     .post(
         validateConfession,
         sanitizeHtml,
+        checkBlacklistWord,
         catchAsync(confessions.store),
     )
     .get(
