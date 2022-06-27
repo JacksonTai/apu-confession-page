@@ -47,7 +47,9 @@ approveBtn.addEventListener('click', async function () {
         Swal.fire({
             icon: "success",
             title: "Confession Approved.</br>😃",
-            html: `<a href="https://www.facebook.com/hashtag/${apucpId.replace('#', '')}" target="_blank">${apucpId}</a> `,
+            html: `<a class="confession__approved-link" target="_blank" 
+                    href="https://www.facebook.com/hashtag/${apucpId.replace('#', '')}">
+                    Facebook link: ${apucpId}</a>`,
             allowOutsideClick: false,
             showDenyButton: false,
             showCancelButton: false,
