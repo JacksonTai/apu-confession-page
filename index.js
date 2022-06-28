@@ -35,7 +35,6 @@ const connectSrcUrls = [
 const scriptSrcUrls = [
     "https://cdn.jsdelivr.net",
     "https://connect.facebook.net/en_US/sdk.js",
-    "https://app.termly.io/embed.min.js"
 ];
 const styleSrcUrls = [
     "https://cdnjs.cloudflare.com",
