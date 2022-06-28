@@ -34,14 +34,15 @@ module.exports.show = async (req, res) => {
         let docs = await BlacklistWord.find().sort({ _id: 'desc' })
         const blacklistWords = docs.map(doc => (doc.content))
 
-        let words;
+        let words = [];
         for (let blacklistWord of blacklistWords) {
             if (content.toLowerCase().includes(blacklistWord)) {
                 let regex = new RegExp(blacklistWord, 'gi')
-                words = content.match(regex)
+                words.push(...content.match(regex)) 
             }
         }
-        if (Array.isArray(words)) {
+        if (words.length > 0) {
+            console.log(words)
             for (let word of words) {
                 confession.content = confession.content.replace(word, `<mark>${word}</mark>`)
             }
