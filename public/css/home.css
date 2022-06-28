@@ -25,6 +25,10 @@ main {
     margin: 1rem auto;
 }
 
+.sweet_title {
+    padding: 0 !important; 
+}
+
 @media (min-width: 1200px) {
     main {
         flex-direction: row;
