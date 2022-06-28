@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require('cors')
 const helmet = require('helmet');
 const mongoose = require("mongoose");
 const session = require('express-session');
@@ -47,6 +48,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 app.use(mongoSanitize());
+app.use(cors())
 app.use(helmet({
     contentSecurityPolicy: {
         directives: {
