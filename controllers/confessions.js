@@ -111,28 +111,82 @@ module.exports.approve = async (req, res) => {
     if (id) {
         const { id } = req.query
         const confession = await Confession.findById(id)
-        const { apucpId, content, timestamp, photo } = confession;
-        const endpoint = photo ? "photos" : "feed";
-        FB.api(
-            `/${process.env.FB_PAGE_ID}/${endpoint}?`,
-            'POST',
-            {
-                "url": photo || '',
-                "message": `${apucpId}\n${content}\n\nConfession on: ${timestamp}`,
-                "access_token": process.env.FB_ACCESS_TOKEN
-            },
-            async function (response) {
-                if (!response.error) {
-                    await Confession.findByIdAndDelete(id).exec((err, doc) => {
-                        let confession = doc.toObject();
-                        confession.apucpId = doc.apucpId;
-                        res.json({ confession })
-                    });
-                    return
+        const { apucpId, content, timestamp, photos, video } = confession;
+        const endpoint = photos ? "photos" : "feed";
+
+        // API for uploading confession that consists of multiple photos.
+        if (Array.isArray(photos)) {
+            FB.api(
+                `/${process.env.FB_PAGE_ID}/albums?access_token=${process.env.FB_ACCESS_TOKEN}`,
+                (response) => {
+                    if (response && !response.error) {
+
+                        // Look for the album's ID of confession by confession ID.
+                        let albumId = null;
+                        for (let album of response.data) {
+                            if (album.name == apucpId) {
+                                albumId = album.id
+                            }
+                        }
+
+                        if (!albumId) {
+                            response.error = { message: `Album <strong>${apucpId}</strong> not found.` }
+                            return res.json(response.error)
+                        }
+
+                        // Upload photo to albums
+                        req.session.counter = 0;
+                        for (let photo of photos) {
+                            FB.api(
+                                `/${albumId}/photos`, "POST",
+                                {
+                                    "access_token": process.env.FB_ACCESS_TOKEN,
+                                    "name": `${apucpId}\n${content}\n\nConfession on: ${timestamp}`,
+                                    "url": photo,
+                                },
+                                function (response) {
+                                    // Counter for posted photo.
+                                    req.session.counter += 1
+
+                                    // Check if all photos has been uploaded.
+                                    if ((req.session.counter) == photos.length) {
+
+                                        delete req.session.albumPhotos;
+                                        if (response && !response.error) {
+                                            return res.json({ success: true })
+                                        }
+                                        res.json(response.error)
+                                    }
+                                }
+                            )
+                        }
+                    } else {
+                        res.json(response.error)
+                    }
                 }
-                res.send(response.error);
-            }
-        );
+            );
+        } else {
+            FB.api(
+                `/${process.env.FB_PAGE_ID}/${endpoint}?`,
+                'POST',
+                {
+                    "access_token": process.env.FB_ACCESS_TOKEN,
+                    "url": photos || '',
+                    "message": `${apucpId}\n${content}\n\nConfession on: ${timestamp}`,
+                },
+                async (response) => {
+                    if (response && !response.error) {
+                        Confession.findByIdAndDelete(id).exec((err, doc) => {
+                            let confession = doc.toObject();
+                            confession.apucpId = doc.apucpId;
+                            res.json({ success: true })
+                        });
+                        return
+                    }
+                    res.json(response.error);
+                }
+            );
+        }
     }
 }
 
