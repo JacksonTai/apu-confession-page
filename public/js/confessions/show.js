@@ -5,6 +5,7 @@ backBtn.addEventListener('click', function () {
     window.location = sessionStorage.getItem('prevPageState') || '/confessions'
 })
 
+/* Remove Confession */
 const actionForm = document.querySelector('.confession__action-form');
 actionForm.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -35,31 +36,57 @@ removeBtn.addEventListener('click', async function () {
     })
 })
 
+/* Approve Confession */
+const showApprovalSuccess = () => {
+    Swal.fire({
+        icon: "success",
+        title: "Confession Approved",
+        html: `<a class="confession__approved-link" target="_blank" 
+                href="https://www.facebook.com/hashtag/${apucpId.replace('#', '')}">
+                Facebook link: ${apucpId}</a>`,
+        allowOutsideClick: false,
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: 'Done',
+        confirmButtonColor: '#1A73E8',
+        iconColor: '#1A73E8',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = '/confessions'
+        }
+    });
+}
+
+const showApprovalErr = (errMsg) => {
+    Swal.fire({
+        icon: "error",
+        title: "Something went wrong",
+        html: `<p>Error: ${errMsg}.</p>`,
+        confirmButtonText: 'Close',
+        confirmButtonColor: '#1A73E8',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = `/confessions/${_id}`
+        }
+    });
+}
+
 const approveBtn = document.querySelector('.btn-approve')
 approveBtn.addEventListener('click', async function () {
     Swal.fire({ allowOutsideClick: false })
     Swal.showLoading()
     const res = await fetch(`/confessions/approve?id=${_id}`)
-    const confession = await res.json()
-    if (confession) {
+    const data = await res.json()
+    if (data) {
         swal.close()
         window.history.replaceState(null, '', `/confessions`);
-        Swal.fire({
-            icon: "success",
-            title: "Confession Approved.</br>😃",
-            html: `<a class="confession__approved-link" target="_blank" 
-                    href="https://www.facebook.com/hashtag/${apucpId.replace('#', '')}">
-                    Facebook link: ${apucpId}</a>`,
-            allowOutsideClick: false,
-            showDenyButton: false,
-            showCancelButton: false,
-            confirmButtonText: 'Done',
-            confirmButtonColor: '#1A73E8',
-            iconColor: '#1A73E8',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location = '/confessions'
-            }
-        });
+        if (data.success) {
+            showApprovalSuccess()
+        }
+        if (data.message) {
+            showApprovalErr(data.message)
+        }
+    } else if (!data) {
+        showApprovalErr('Please create an album for this confession.')
     }
 })
