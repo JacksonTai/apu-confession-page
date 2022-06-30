@@ -1,10 +1,11 @@
+/* Blacklist words detection and response */
 let blacklistWords;
 const getBlacklistWords = async () => {
     const rootUrl = window.location.href.split('confessions')[0];
     const { data } = await axios.get(`${rootUrl}blacklistWord/api`);
     blacklistWords = data.map(word => (word.content));
 }
-getBlacklistWords().then(()=>{
+getBlacklistWords().then(() => {
     checkBlacklistWord(content.value.trim().toLowerCase());
 });
 
@@ -57,6 +58,7 @@ content.addEventListener('input', function () {
     };
 });
 
+/* Treaty checkbox error message response */
 const treatyCheckbox = document.querySelector('.confess__input--treaty');
 treatyCheckbox.addEventListener('change', function () {
     const treatyErrMsg = document.querySelector('[data-err-msg="treaty"]')
@@ -67,6 +69,7 @@ treatyCheckbox.addEventListener('change', function () {
     }
 })
 
+/* Submitted confession response */
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.get('status') == "submitted") {
     window.history.replaceState(null, '', `/`);
@@ -89,6 +92,7 @@ if (urlParams.get('status') == "submitted") {
     });
 }
 
+/* Store confession in session */
 const confessionForm = document.querySelector('.confession__form');
 window.addEventListener('beforeunload', async function (e) {
     const formData = new FormData(confessionForm);

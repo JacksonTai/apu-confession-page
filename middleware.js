@@ -43,11 +43,12 @@ module.exports.checkBlacklistWord = async (req, res, next) => {
     const { confession } = req.body
     let docs = await BlacklistWord.find().sort({ _id: 'desc' })
     const blacklistWords = docs.map(doc => (doc.content))
-   
+    
+    confession.status = 'Pending';
     for (let blacklistWord of blacklistWords) {
         if (confession.content.toLowerCase().includes(blacklistWord)) {
             let regex = new RegExp(blacklistWord, 'gi')
-            confession.status = confession.content.match(regex) ? 'Blacklisted' : null
+            confession.status = confession.content.match(regex) ? 'Blacklisted' : 'Pending';
         }
     }
     next();
