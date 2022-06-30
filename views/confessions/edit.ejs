@@ -38,13 +38,43 @@
                     <p class="confess__content">You may upload
                         <a href="https://imgur.com/upload" target="_blank">photo</a> or
                         <a href="https://streamable.com" target="_blank">video</a>,
-                        then copy and paste the image address or video link into the textboxes below.
+                        then copy and paste the image address or video link into the textboxes below and add it by using
+                        the <i class="fa-solid fa-circle-plus"></i> button.
                     </p>
                     <div class="wrapper">
-                        <input type="text" name="confession[photo]" class="confess__input confess__input--media"
-                            placeholder="Image address ..." value="<%= locals.input ? input.photo : confession.photo %>">
-                        <input type="text" name="confession[video]" class="confess__input confess__input--media"
-                            placeholder="Video link ..." value="<%= locals.input ? input.video : confession.video %>">
+                        <div class="input__item">
+                            <div class="input__item-wrapper">
+                                <input type="text" id="input__photo" class="confess__input confess__input--media"
+                                    placeholder="Image address ...">
+                                <i class="fa-solid fa-circle-plus add-media-btn" data-type="photo"></i>
+                            </div>
+                            <div class="media__container media__container--photo">
+                                <% for (let photo of confession.photo) { %>
+                                <div class="media__item">
+                                    <i class="fa-solid fa-square-minus delete-media-btn"></i>
+                                    <a href="<%= photo %>" target="_blank"><%= photo %></a>
+                                    <input type="hidden" name="confession[photo]" value="<%= photo %>">
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="input__item">
+                            <div class="input__item-wrapper">
+                                <% let tempVideo = locals.tempConfession ? locals.tempConfession.video : '' %>
+                                <input type="text" id="input__video" class="confess__input confess__input--media"
+                                    placeholder="Video link ..." value="<%= locals.input ? input.video : tempVideo %>">
+                                <i class="fa-solid fa-circle-plus add-media-btn" data-type="video"></i>
+                            </div>
+                            <div class="media__container media__container--video">
+                                <% for (let video of confession.video) { %>
+                                <div class="media__item">
+                                    <i class="fa-solid fa-square-minus delete-media-btn"></i>
+                                    <a href="<%= video %>" target="_blank"><%= video %></a>
+                                    <input type="hidden" name="confession[video]" value="<%= video %>">
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -65,6 +95,7 @@
         const id = "<%= confession._id %>"
     </script>
     <script src="/js/confessions/edit.js"></script>
+    <script src="/js/confessions/utils/media.js"></script>
 </body>
 
 </html>

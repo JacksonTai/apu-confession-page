@@ -39,7 +39,7 @@
     "joi": "^17.6.0",
     "method-override": "^3.0.0",
     "mongoose": "^6.3.5",
-    "nodemon": "^2.0.16",
+    "nodemon": "^2.0.18",
     "sweetalert2": "^11.4.17",
     "xss": "^1.0.13"
   },

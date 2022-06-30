@@ -33,6 +33,7 @@ router
         authenticate,
         validateConfession,
         sanitizeHtml,
+        checkBlacklistWord,
         catchAsync(confessions.update),
     )
     .delete(

@@ -8,7 +8,9 @@ module.exports.create = async (req, res) => {
 };
 
 module.exports.store = async (req, res) => {
+    // Remove confession stored in session.
     delete req.session.tempConfession;
+
     let { confession } = req.body;
     confession = await new Confession(confession).save();
     res.redirect(`/confessions/create?status=submitted&id=${encodeURIComponent(confession.apucpId)}`);
@@ -38,11 +40,10 @@ module.exports.show = async (req, res) => {
         for (let blacklistWord of blacklistWords) {
             if (content.toLowerCase().includes(blacklistWord)) {
                 let regex = new RegExp(blacklistWord, 'gi')
-                words.push(...content.match(regex)) 
+                words.push(...content.match(regex))
             }
         }
         if (words.length > 0) {
-            console.log(words)
             for (let word of words) {
                 confession.content = confession.content.replace(word, `<mark>${word}</mark>`)
             }
@@ -85,8 +86,20 @@ module.exports.api = async (req, res) => {
 };
 
 module.exports.update = async (req, res) => {
-    await Confession.findByIdAndUpdate(req.params.id, req.body.confession);
-    res.redirect(`/confessions/${req.params.id}/edit?status=edited&confession=${req.params.id}`);
+    const { id } = req.params
+    const { confession } = req.body
+
+    // Make an array for submitted photo and video.
+    let { photo = null, video = null } = confession
+    confession.photo = (photo && photo.length > 0) ? photo.toString().split(',') : [];
+    confession.video = (video && video.length > 0) ? video.toString().split(',') : [];
+
+    Confession.findByIdAndUpdate(id, confession, (error, result) => {
+        if (error) {
+            console.log(error);
+        }
+    });
+    res.redirect(`/confessions/${id}/edit?status=edited&confession=${id}`);
 };
 
 module.exports.edit = async (req, res) => {
@@ -111,11 +124,11 @@ module.exports.approve = async (req, res) => {
     if (id) {
         const { id } = req.query
         const confession = await Confession.findById(id)
-        const { apucpId, content, timestamp, photos, video } = confession;
-        const endpoint = photos ? "photos" : "feed";
+        const { apucpId, content, timestamp, photo } = confession;
 
         // API for uploading confession that consists of multiple photos.
-        if (Array.isArray(photos)) {
+        if (photo.length > 1) {
+            let photos = photo;
             FB.api(
                 `/${process.env.FB_PAGE_ID}/albums?access_token=${process.env.FB_ACCESS_TOKEN}`,
                 (response) => {
@@ -130,7 +143,12 @@ module.exports.approve = async (req, res) => {
                         }
 
                         if (!albumId) {
-                            response.error = { message: `Album <strong>${apucpId}</strong> not found.` }
+                            response.error = {
+                                message: `Album <strong>${apucpId}</strong> not found.</br></br>
+                                <p>This confession consists of multiple photos. Kindly
+                                <a href="https://business.facebook.com/latest/posts/photos?asset_id=${process.env.FB_PAGE_ID}" target="_blank">
+                                    create an album</a> to post the confession.</p>`
+                            }
                             return res.json(response.error)
                         }
 
@@ -166,12 +184,17 @@ module.exports.approve = async (req, res) => {
                 }
             );
         } else {
+            // Endpoint for confession that have photo or not.
+            const endpoint = (photo.length === 1) ? "photos" : "feed";
+
+            const [link] = photo
+
             FB.api(
                 `/${process.env.FB_PAGE_ID}/${endpoint}?`,
                 'POST',
                 {
                     "access_token": process.env.FB_ACCESS_TOKEN,
-                    "url": photos || '',
+                    "url": link || '',
                     "message": `${apucpId}\n${content}\n\nConfession on: ${timestamp}`,
                 },
                 async (response) => {

@@ -7,7 +7,7 @@ main {
 }
 
 .home-img {
-    width: 80%;
+    width: 100%;
     max-width: 460px;
 }
 
@@ -42,7 +42,7 @@ main {
 
     .home-img {
         order: 1;
-        margin-left: 5rem;
+        margin-left: 1rem;
     }
 
     .home__content {

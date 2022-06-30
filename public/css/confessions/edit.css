@@ -59,13 +59,58 @@ h2 {
     flex-direction: column;
 }
 
+.input__item-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.input__item {
+    display: flex;
+    flex-direction: column;
+}
+
+.confess__input--media:first-of-type,
+.add-media-btn {
+    margin-bottom: 0.8rem;
+}
+
+.confess__input--media:first-of-type {
+    margin-bottom: 0.8rem;
+}
+
 .confess__input--media {
     padding: 1.5em;
     height: 2rem;
 }
 
-.confess__input--media:first-of-type {
+.add-media-btn {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.media__container {
+    display: flex;
+    flex-wrap: wrap;
     margin-bottom: 0.8rem;
+}
+
+.media__item {
+    display: inline-block;
+    background-color: var(--clr-footer);
+    width: 100%;
+    word-wrap: break-word;
+    border-radius: 10px;
+    margin: 0 0.3rem 0.5rem 0;
+    padding: 0.45em 1em;
+}
+
+.delete-media-btn {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-bottom: 0.35rem;
+    cursor: pointer;
 }
 
 .confession__action {
@@ -85,6 +130,12 @@ h2 {
     color: var(--clr-theme);
 }
 
+@media(min-width: 342px) {
+    .media__item {
+        width: fit-content;
+    }
+}
+
 @media (min-width: 353px) {
     .btn-cancel {
         margin-bottom: 0;
@@ -94,20 +145,5 @@ h2 {
 @media (min-width: 369.5px) {
     .btn-cancel {
         margin-right: 1rem;
-    }
-}
-
-@media (min-width: 1200px) {
-    .wrapper {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .confess__input--media:first-of-type {
-        margin-bottom: 0rem;
-    }
-
-    .confess__input--media {
-        width: 49%;
     }
 }
