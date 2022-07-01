@@ -71,6 +71,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: dbUrl }),
+    proxy: true,
     cookie: {
         name: 'session',
         httpOnly: true,
