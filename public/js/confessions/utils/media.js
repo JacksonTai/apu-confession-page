@@ -41,7 +41,9 @@ const addMediaBtns = document.querySelectorAll('.add-media-btn')
 for (let addMediaBtn of addMediaBtns) {
     addMediaBtn.addEventListener('click', function () {
         let input = this.previousElementSibling;
-        addMediaItem(input.value.trim(), this.dataset.type)
-        input.value = '';
+        if (input.value.trim()) {
+            addMediaItem(input.value.trim(), this.dataset.type)
+            input.value = '';
+        }
     })
 }
