@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/JacksonTai/APU-Confession-Page/blob/master/public/img/logo.jpg" width="200" />
+  <img src="https://github.com/JacksonTai/APU-Confession-Page/blob/master/public/img/logo.png" width="30" />
   <br/>
   <strong>A website built for Asia Pacific University Confession Page</strong>
 </p>
