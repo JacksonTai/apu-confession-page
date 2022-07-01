@@ -1,7 +1,8 @@
 const xss = require('xss')
 const Confession = require('./models/confessions');
+const BlacklistWord = require('./models/blacklistWord');
 const validateReqBody = require('./utils/validateReqBody');
-const { confessionSchema, signinSchema } = require("./joiSchema");
+const { confessionSchema, signinSchema, blacklistWordSchema } = require("./joiSchema");
 
 module.exports.validateConfession = async (req, res, next) => {
     const error = validateReqBody(confessionSchema, req.body);
@@ -28,6 +29,31 @@ module.exports.validateSignin = async (req, res, next) => {
     next();
 }
 
+module.exports.validateBlacklistWord = async (req, res, next) => {
+    const error = validateReqBody(blacklistWordSchema, req.body);
+    if (error) {
+        error.input = req.body.blacklistWord;
+        error.blacklistWords = await BlacklistWord.find().sort({ _id: 'desc' })
+        return res.render('blacklistWord', error);
+    }
+    next();
+}
+
+module.exports.checkBlacklistWord = async (req, res, next) => {
+    const { confession } = req.body
+    let docs = await BlacklistWord.find().sort({ _id: 'desc' })
+    const blacklistWords = docs.map(doc => (doc.content))
+    
+    confession.status = 'Pending';
+    for (let blacklistWord of blacklistWords) {
+        if (confession.content.toLowerCase().includes(blacklistWord)) {
+            let regex = new RegExp(blacklistWord, 'gi')
+            confession.status = confession.content.match(regex) ? 'Blacklisted' : 'Pending';
+        }
+    }
+    next();
+}
+
 module.exports.authenticate = async (req, res, next) => {
     // Turn caching off.
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
@@ -38,7 +64,6 @@ module.exports.authenticate = async (req, res, next) => {
 
 module.exports.sanitizeHtml = async (req, res, next) => {
     let resource = Object.values(req.body)[0];
-
     Object.entries(resource).forEach((item) => {
         resource[item[0]] = xss(item[1])
     })

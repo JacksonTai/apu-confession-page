@@ -29,6 +29,10 @@ h1 {
     background-color: #F2F2F2;
 }
 
+.confession__item:hover p {
+    color: var(--clr-text-hover);
+}
+
 .confession__item:last-of-type {
     border-bottom: none;
 }
@@ -50,15 +54,16 @@ h1 {
 .btn-view-more {
     display: block;
     margin: 3rem auto;
-    border: 1px solid var(--clr-primary);
-    color: var(--clr-primary);
-    background-color: #fff;
     width: fit-content;
+    background-color: var(--clr-theme);
+    border: 1px solid var(--clr-link);
+    color: var(--clr-link);
 }
 
 .btn-view-more:hover {
-    background-color: var(--clr-primary);
-    color: #fff;
+    background-color: var(--clr-link);
+    border: 1px solid var(--clr-theme);
+    color: var(--clr-theme);
 }
 
 .empty-list-main {

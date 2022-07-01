@@ -15,8 +15,10 @@ main {
 }
 
 .apucp__logo {
-    display: block;
-    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
 }
 
 .signin__title {
@@ -50,7 +52,7 @@ main {
     margin: 2rem auto;
 }
 
-.back {
+.btn--back {
     display: block;
     text-align: center;
     text-decoration: none;

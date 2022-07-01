@@ -17,6 +17,17 @@ h1 {
     font-weight: 100;
 }
 
+.confession__blacklist-msg,
+.fa-triangle-exclamation {
+    width: fit-content;
+    color: #F7B217;
+}
+
+.confession__blacklist-msg {
+    border-bottom: 2px dashed #F7B217;
+    margin-bottom: 0.8rem;
+}
+
 .confession__edit {
     display: inline-block;
     color: var(--clr-link);
@@ -28,6 +39,22 @@ h1 {
     margin: 0 auto 2.5rem;
 }
 
+.media__container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+}
+
+.media__item {
+    display: inline-block;
+    background-color: var(--clr-footer);
+    width: 100%;
+    word-wrap: break-word;
+    border-radius: 10px;
+    margin: 0 0.3rem 0.5rem 0;
+    padding: 0.45em 1em;
+}
+
 .confession__action {
     display: flex;
     justify-content: flex-end;
@@ -37,6 +64,17 @@ h1 {
 
 .btn-remove {
     margin-bottom: 0.7rem;
+    color: #16181D;
+}
+
+.confession__approved-link {
+    color: #16181D;
+}
+
+@media(min-width: 342px) {
+    .media__item {
+        width: fit-content;
+    }
 }
 
 @media (min-width: 353px) {

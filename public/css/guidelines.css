@@ -1,12 +1,14 @@
 main {
     min-height: 80vh;
-    margin: 3rem auto;
+    margin: 0 auto 3rem;
+    display: flex;
+    align-items: center;
 }
 
 .guidelines__content-title {
     width: fit-content;
     margin-bottom: 0.8rem;
-    border-bottom: 0.15rem solid var(--clr-title);
+    border-bottom: 0.15rem solid var(--clr-text);
 }
 
 .guidelines__content-title-2 {
@@ -23,6 +25,16 @@ main {
 
 .guidelines__content--3 li::before {
     content: '❌ ';
+}
+
+.guidelines__blacklist-word {
+    padding: 1em;
+    margin: 1.2rem 0;
+    background-color: var(--clr-footer);
+}
+
+.fa-circle-info {
+    margin-right: 0.3rem;
 }
 
 @media (min-width: 1200px) {

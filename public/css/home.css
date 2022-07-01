@@ -7,7 +7,7 @@ main {
 }
 
 .home-img {
-    width: 80%;
+    width: 100%;
     max-width: 460px;
 }
 
@@ -25,6 +25,10 @@ main {
     margin: 1rem auto;
 }
 
+.sweet_title {
+    padding: 0 !important; 
+}
+
 @media (min-width: 1200px) {
     main {
         flex-direction: row;
@@ -38,7 +42,7 @@ main {
 
     .home-img {
         order: 1;
-        margin-left: 5rem;
+        margin-left: 1rem;
     }
 
     .home__content {

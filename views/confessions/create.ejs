@@ -9,7 +9,10 @@
 
 <body>
     <main>
-        <img src="/img/logo.jpg" class="apucp__logo" alt="APUCP Logo">
+        <div class="apucp__logo">
+            <img src="/img/logo.png" class="navbar__logo-img" alt="Logo">
+            <h2>APUCP</h2>
+        </div>
         <p class="confess__content">Worried about your privacy when filling this form? Read our
             <a href="https://bit.ly/3lkmGuJ" target="_blank">Form Transparency</a>. Akari is a human and is bound to
             make mistake, feel free to contact us on
@@ -18,7 +21,7 @@
         </p>
         <p class="confess__content">Please check <a href="/information" target="_blank">Common Confessions/Questions</a>
             section before you write anything. Chances are the question have been asked for many times. The confession
-            will automatically be saved as draft for a maximum of 7 days once the page is closed.
+            will be saved as draft and will be removed upon 7 days of inactivity.
         </p>
         <p class="confess__content">
             There are currently <span class="queue-num"><%= queueNum %></span> confession ahead of you awaiting to be
@@ -31,11 +34,17 @@
                     <h2>Confession Content</h2>
                     <span class="confession__label-alert">*</span>
                 </div>
+                <% if (locals.errMsg && errMsg.content) { %>
                 <p class="err-msg" data-err-msg="content">
-                    <% if (locals.errMsg && errMsg.content) { %>
                     <i class="fa-solid fa-triangle-exclamation"></i> <%= errMsg.content %>
-                    <% } %>
                 </p>
+                <% } %>
+                <p class="err-msg" data-err-msg="blacklist">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Please be aware that your confession will be flagged for review as it contains the following
+                    <a href="/blacklistWord" target="_blank">blacklist word</a>:
+                </p>
+                <div class="detected-word-container"></div>
                 <% let tempContent = locals.tempConfession ? locals.tempConfession.content : '' %>
                 <textarea name="confession[content]" class="confess__input confess__input--content"
                     placeholder="Write your confession here ..."><%= locals.input ? input.content : tempContent %></textarea>
@@ -46,15 +55,62 @@
                 <p class="confess__content">You may upload
                     <a href="https://imgur.com/upload" target="_blank">photo</a> or
                     <a href="https://streamable.com" target="_blank">video</a>,
-                    then copy and paste the image address or video link into the textboxes below.
+                    then copy and paste the image address or video link into the textboxes below and add it by using
+                    the <i class="fa-solid fa-circle-plus"></i> button.
                 </p>
                 <div class="wrapper">
-                    <% let tempPhoto = locals.tempConfession ? locals.tempConfession.photo : '' %>
-                    <input type="text" name="confession[photo]" class="confess__input confess__input--media"
-                        placeholder="Image address ..." value="<%= locals.input ? input.photo : tempPhoto %>">
-                    <% let tempVideo = locals.tempConfession ? locals.tempConfession.video : '' %>
-                    <input type="text" name="confession[video]" class="confess__input confess__input--media"
-                        placeholder="Video link ..." value="<%= locals.input ? input.video : tempVideo %>">
+                    <div class="input__item">
+                        <div class="input__item-wrapper">
+                            <input type="text" id="input__photo" class="confess__input confess__input--media"
+                                placeholder="Image address ...">
+                            <i class="fa-solid fa-circle-plus add-media-btn" data-type="photo"></i>
+                        </div>
+                        <% let tempPhoto = locals.tempConfession ? locals.tempConfession.photo : '' %>
+                        <% let photos = locals.input ? input.photo : tempPhoto %>
+                        <div class="media__container media__container--photo">
+                            <% if (photos && typeof(photos) != 'string') {  %>
+                            <% for (let photo of photos) { %>
+                            <div class="media__item">
+                                <i class="fa-solid fa-square-minus delete-media-btn"></i>
+                                <a href="<%= photo %>" target="_blank"><%= photo %></a>
+                                <input type="hidden" name="confession[photo]" value="<%= photo %>">
+                            </div>
+                            <% } %>
+                            <% } else if (photos && typeof(photos) == 'string') { %>
+                            <div class="media__item">
+                                <i class="fa-solid fa-square-minus delete-media-btn"></i>
+                                <a href="<%= photos %>" target="_blank"><%= photos %></a>
+                                <input type="hidden" name="confession[photo]" value="<%= photos %>">
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="input__item">
+                        <div class="input__item-wrapper">
+                            <input type="text" id="input__video" class="confess__input confess__input--media"
+                                placeholder="Video link ...">
+                            <i class="fa-solid fa-circle-plus add-media-btn" data-type="video"></i>
+                        </div>
+                        <% let tempVideo = locals.tempConfession ? locals.tempConfession.video : '' %>
+                        <% let videos = locals.input ? input.video : tempVideo %>
+                        <div class="media__container media__container--video">
+                            <% if (videos && typeof(videos) != 'string') {  %>
+                            <% for (let video of videos) { %>
+                            <div class="media__item">
+                                <i class="fa-solid fa-square-minus delete-media-btn"></i>
+                                <a href="<%= video %>" target="_blank"><%= video %></a>
+                                <input type="hidden" name="confession[video]" value="<%= video %>">
+                            </div>
+                            <% } %>
+                            <% } else if (videos && typeof(videos) == 'string') { %>
+                            <div class="media__item">
+                                <i class="fa-solid fa-square-minus delete-media-btn"></i>
+                                <a href="<%= videos %>" target="_blank"><%= videos %></a>
+                                <input type="hidden" name="confession[video]" value="<%= videos %>">
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -82,16 +138,18 @@
             </div>
 
             <div class="form__item form__item--action">
-                <a href="/" class="btn">
+                <a href="/" class="btn btn--back">
                     <i class="fa-solid fa-right-from-bracket"></i> Back
                 </a>
                 <button class="btn btn-primary">Submit</button>
             </div>
         </form>
     </main>
+    <script src="/js/partials/theme.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/confessions/create.js"></script>
+    <script src="/js/confessions/utils/media.js"></script>
     <% if (locals.errMsg && errMsg.treaty && !errMsg.content) { %>
     <script>
         treatyCheckbox.scrollIntoView()

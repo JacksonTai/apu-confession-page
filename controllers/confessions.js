@@ -1,4 +1,5 @@
 const Confession = require('../models/confessions');
+const BlacklistWord = require('../models/blacklistWord')
 const FB = require('fb')
 
 module.exports.create = async (req, res) => {
@@ -7,7 +8,9 @@ module.exports.create = async (req, res) => {
 };
 
 module.exports.store = async (req, res) => {
+    // Remove confession stored in session.
     delete req.session.tempConfession;
+
     let { confession } = req.body;
     confession = await new Confession(confession).save();
     res.redirect(`/confessions/create?status=submitted&id=${encodeURIComponent(confession.apucpId)}`);
@@ -22,11 +25,29 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.show = async (req, res) => {
-    Confession.findById(req.params.id).exec((err, doc) => {
+    Confession.findById(req.params.id).exec(async (err, doc) => {
         let confession = doc.toObject();
+        let { content } = confession
         confession.apucpId = doc.apucpId;
         confession.timestamp = doc.timestamp;
-        confession.content = confession.content.replaceAll("\n", "<br>");
+        confession.content = content.replaceAll('\n', '<br>');
+
+        // Check for blacklist word and highlight it.
+        let docs = await BlacklistWord.find().sort({ _id: 'desc' })
+        const blacklistWords = docs.map(doc => (doc.content))
+
+        let words = [];
+        for (let blacklistWord of blacklistWords) {
+            if (content.toLowerCase().includes(blacklistWord)) {
+                let regex = new RegExp(blacklistWord, 'gi')
+                words.push(...content.match(regex))
+            }
+        }
+        if (words.length > 0) {
+            for (let word of words) {
+                confession.content = confession.content.replace(word, `<mark>${word}</mark>`)
+            }
+        }
         res.render('confessions/show', { confession });
     });
 };
@@ -57,7 +78,7 @@ module.exports.api = async (req, res) => {
                                     <p class="confession__content">
                                         ${confession.content}
                                     </p>
-                                    <span>${confession.status}</span>
+                                    <p>${confession.status}</p>
                                 </div>
                             </a>`
     }
@@ -65,8 +86,20 @@ module.exports.api = async (req, res) => {
 };
 
 module.exports.update = async (req, res) => {
-    await Confession.findByIdAndUpdate(req.params.id, req.body.confession);
-    res.redirect(`/confessions/${req.params.id}/edit?status=edited&confession=${req.params.id}`);
+    const { id } = req.params
+    const { confession } = req.body
+
+    // Make an array for submitted photo and video.
+    let { photo = null, video = null } = confession
+    confession.photo = (photo && photo.length > 0) ? photo.toString().split(',') : [];
+    confession.video = (video && video.length > 0) ? video.toString().split(',') : [];
+
+    Confession.findByIdAndUpdate(id, confession, (error, result) => {
+        if (error) {
+            console.log(error);
+        }
+    });
+    res.redirect(`/confessions/${id}/edit?status=edited&confession=${id}`);
 };
 
 module.exports.edit = async (req, res) => {
@@ -92,27 +125,91 @@ module.exports.approve = async (req, res) => {
         const { id } = req.query
         const confession = await Confession.findById(id)
         const { apucpId, content, timestamp, photo } = confession;
-        const endpoint = photo ? "photos" : "feed";
-        FB.api(
-            `/${process.env.FB_PAGE_ID}/${endpoint}?`,
-            'POST',
-            {
-                "url": photo || '',
-                "message": `${apucpId}\n${content}\n\nConfession on: ${timestamp}`,
-                "access_token": process.env.FB_ACCESS_TOKEN
-            },
-            async function (response) {
-                if (!response.error) {
-                    await Confession.findByIdAndDelete(id).exec((err, doc) => {
-                        let confession = doc.toObject();
-                        confession.apucpId = doc.apucpId;
-                        res.json({ confession })
-                    });
-                    return
+
+        // API for uploading confession that consists of multiple photos.
+        if (photo.length > 1) {
+            let photos = photo;
+            FB.api(
+                `/${process.env.FB_PAGE_ID}/albums?access_token=${process.env.FB_ACCESS_TOKEN}`,
+                (response) => {
+                    if (response && !response.error) {
+
+                        // Look for the album's ID of confession by confession ID.
+                        let albumId = null;
+                        for (let album of response.data) {
+                            if (album.name == apucpId) {
+                                albumId = album.id
+                            }
+                        }
+
+                        if (!albumId) {
+                            response.error = {
+                                message: `Album <strong>${apucpId}</strong> not found.</br></br>
+                                <p>This confession consists of multiple photos. Kindly
+                                <a href="https://business.facebook.com/latest/posts/photos?asset_id=${process.env.FB_PAGE_ID}" target="_blank">
+                                    create an album</a> to post the confession.</p>`
+                            }
+                            return res.json(response.error)
+                        }
+
+                        // Upload photo to albums
+                        req.session.counter = 0;
+                        for (let photo of photos) {
+                            FB.api(
+                                `/${albumId}/photos`, "POST",
+                                {
+                                    "access_token": process.env.FB_ACCESS_TOKEN,
+                                    "name": `${apucpId}\n${content}\n\nConfession on: ${timestamp}`,
+                                    "url": photo,
+                                },
+                                function (response) {
+                                    // Counter for posted photo.
+                                    req.session.counter += 1
+
+                                    // Check if all photos has been uploaded.
+                                    if ((req.session.counter) == photos.length) {
+
+                                        delete req.session.albumPhotos;
+                                        if (response && !response.error) {
+                                            return res.json({ success: true })
+                                        }
+                                        res.json(response.error)
+                                    }
+                                }
+                            )
+                        }
+                    } else {
+                        res.json(response.error)
+                    }
                 }
-                res.send(response.error);
-            }
-        );
+            );
+        } else {
+            // Endpoint for confession that have photo or not.
+            const endpoint = (photo.length === 1) ? "photos" : "feed";
+
+            const [link] = photo
+
+            FB.api(
+                `/${process.env.FB_PAGE_ID}/${endpoint}?`,
+                'POST',
+                {
+                    "access_token": process.env.FB_ACCESS_TOKEN,
+                    "url": link || '',
+                    "message": `${apucpId}\n${content}\n\nConfession on: ${timestamp}`,
+                },
+                async (response) => {
+                    if (response && !response.error) {
+                        Confession.findByIdAndDelete(id).exec((err, doc) => {
+                            let confession = doc.toObject();
+                            confession.apucpId = doc.apucpId;
+                            res.json({ success: true })
+                        });
+                        return
+                    }
+                    res.json(response.error);
+                }
+            );
+        }
     }
 }
 

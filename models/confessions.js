@@ -25,10 +25,10 @@ const ConfessionSchema = new Schema({
         default: Date.now
     },
     photo: {
-        type: String
+        type: [String]
     },
     video: {
-        type: String
+        type: [String]
     },
     content: {
         type: String,
@@ -57,6 +57,12 @@ ConfessionSchema.virtual('apucpId').get(function () {
 
 // Middleware
 ConfessionSchema.pre("save", async function () {
+    // Make an array for submitted photo and video.
+    let { photo = null, video = null } = this
+    this.photo = (photo.length > 0) ? photo.toString().split(',') : [];
+    this.video = (video.length > 0) ? video.toString().split(',') : [];
+    
+    // Counter for confession ID.
     let counter = await Counter.countDocuments();
     if (counter === 1) {
         let count = await Counter.findById(1)

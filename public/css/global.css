@@ -24,17 +24,27 @@ html {
 
 /* --------- [Variables] ---------- */
 :root {
-  /* Theme colors */
-  --clr-primary: #482FEB;
+  /* colors */
+  --clr-primary: #1A73E8;
   --clr-secondary: #ec6f25;
-  --clr-title: #253D4E;
-  --clr-text: #000; /* 5F6368 */
-  --clr-link: #1A73E8;
   --clr-delete: #fa2230;
-  /* Theme font-family */
+  --clr-theme: #fff;
+  --clr-text: #16181D;
+  --clr-text-hover: #16181D;
+  --clr-link: #1A73E8; 
+  --clr-footer: #f1f2f2;
+  /* font-family */
   --ff-montserrat-title: "montserrat-bold";
   --ff-montserrat-text: "montserrat-medium";
   --ff-montserrat-light: "montserrat-light";
+}
+
+:root.dark {
+  --clr-theme: #16181D;
+  --clr-text: #DDDDDD;
+  --clr-link: #fff;
+  --clr-footer: #0c0e10;
+  --clr-input-bg: #2e2f32;
 }
 
 /* --------- [Fonts] ---------- */
@@ -59,7 +69,6 @@ h2,
 h3,
 h4,
 h5 {
-  color: var(--clr-title);
   font-family: var(--ff-montserrat-title);
 }
 
@@ -68,13 +77,21 @@ button,
 input,
 label,
 .txt,
-span,
 li,
 a,
 p {
   font-size: 1rem;
-  color: var(--clr-text);
   font-family: var(--ff-montserrat-text);
+  color: var(--clr-text);
+}
+
+span {
+  font-family: var(--ff-montserrat-text);
+}
+
+textarea,
+input {
+  background-color: var(--clr-input-bg);
 }
 
 .txt {
@@ -118,6 +135,11 @@ input {
 }
 
 /* ---------- [Layout] ----------- */
+body {
+  background-color: var(--clr-theme);
+  color: var(--clr-text);
+}
+
 main {
   min-height: calc(100vh - 116px);
   width: 85%;

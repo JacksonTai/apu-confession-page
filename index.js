@@ -33,7 +33,7 @@ const connectSrcUrls = [
 ]
 const scriptSrcUrls = [
     "https://cdn.jsdelivr.net",
-    "https://connect.facebook.net/en_US/sdk.js"
+    "https://connect.facebook.net/en_US/sdk.js",
 ];
 const styleSrcUrls = [
     "https://cdnjs.cloudflare.com",
@@ -92,7 +92,7 @@ app.set('view engine', 'ejs');
 
 // Route
 app.use('/confessions', require('./routes/confessions'));
-app.use('/blacklist', require('./routes/blacklist'));
+app.use('/blacklistWord', require('./routes/blacklistWord'));
 app.use('/apucp-admin', require('./routes/admin'));
 app.use('/', require('./routes/pages'));
 
