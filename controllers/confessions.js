@@ -171,7 +171,12 @@ module.exports.approve = async (req, res) => {
 
                                         delete req.session.albumPhotos;
                                         if (response && !response.error) {
-                                            return res.json({ success: true })
+                                            Confession.findByIdAndDelete(id).exec((err, doc) => {
+                                                let confession = doc.toObject();
+                                                confession.apucpId = doc.apucpId;
+                                                res.json({ success: true })
+                                            });
+                                            return
                                         }
                                         res.json(response.error)
                                     }
