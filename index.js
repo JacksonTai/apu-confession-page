@@ -7,6 +7,8 @@ const app = express();
 const path = require('path');
 const helmet = require('helmet');
 const mongoose = require("mongoose");
+const minify = require('express-minify');
+const compression = require('compression');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const methodOverride = require("method-override");
@@ -43,6 +45,8 @@ const fontSrcUrls = [
 ];
 
 // Middleware
+app.use(compression());
+app.use(minify());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
