@@ -145,9 +145,12 @@ module.exports.approve = async (req, res) => {
                         if (!albumId) {
                             response.error = {
                                 message: `Album <strong>${apucpId}</strong> not found.</br></br>
-                                <p>This confession consists of multiple photos. Kindly
-                                <a href="https://business.facebook.com/latest/posts/photos?asset_id=${process.env.FB_PAGE_ID}" target="_blank">
-                                    create an album</a> to post the confession.</p>`
+                                <span>This confession consists of multiple photos. Kindly
+                                <a style="color: var(--clr-primary)" 
+                                   href="https://business.facebook.com/latest/posts/photos?asset_id=${process.env.FB_PAGE_ID}" target="_blank">
+                                    create an album
+                                </a> to post the confession.
+                                </span>`
                             }
                             return res.json(response.error)
                         }
