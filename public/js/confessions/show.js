@@ -61,7 +61,7 @@ const showApprovalErr = (errMsg) => {
     Swal.fire({
         icon: "error",
         title: "Something went wrong",
-        html: `<p>Error: ${errMsg}</p>`,
+        html: `<span>Error: ${errMsg}</span>`,
         confirmButtonText: 'Close',
         confirmButtonColor: '#1A73E8',
     }).then((result) => {
