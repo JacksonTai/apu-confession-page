@@ -48,7 +48,7 @@ const fontSrcUrls = [
 app.use(compression());
 app.use(minify());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"), { 'maxAge': '31536000' }));
 app.use(methodOverride("_method"));
 app.use(mongoSanitize());
 app.use(helmet({
