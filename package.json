@@ -30,7 +30,6 @@
     "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",
     "devcert": "^1.2.2",
-    "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "ejs-mate": "^4.0.0",
     "express": "^4.18.1",
@@ -48,6 +47,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.2.2",
+    "dotenv": "^16.0.3",
     "eslint": "^8.19.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0"
