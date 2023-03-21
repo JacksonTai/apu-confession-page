@@ -51,5 +51,8 @@
     "eslint": "^8.19.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0"
+  },
+  "engines": {
+    "node": "18.13.0"
   }
 }
